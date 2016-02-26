@@ -45,14 +45,14 @@ https://github.com/tomtor/school-crowd
 
 	var info = L.control();
 	info.onAdd = function (map) {
-	    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-	    this.update();
-	    return this._div;
+	  this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+	  this.update();
+	  return this._div;
 	};
 
 	// method that we will use to update the control based on feature properties passed
 	info.update = function (props) {
-	    this._div.innerHTML = '<h4>Je Eigen Kaart</h4><br/><b><small>Klik om toe te voegen</small></b>';
+	  this._div.innerHTML = '<h4>Je Eigen Kaart</h4><br/><b><small>Klik om toe te voegen</small></b>';
 	};
 	info.addTo(map);
 
@@ -86,8 +86,8 @@ https://github.com/tomtor/school-crowd
 	}
 	
 	function setCharAt(str,index,chr) {
-	        if(index > str.length-1) return str;
-	        return str.substr(0,index) + chr + str.substr(index+1);
+		if(index > str.length-1) return str;
+		return str.substr(0,index) + chr + str.substr(index+1);
 	}
 
 	function UTC2Local(str) {
