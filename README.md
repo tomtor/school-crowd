@@ -1,2 +1,2 @@
 # school-crowd
-Prototypy for School Crowd Sourcing Activities
+Prototype for School Crowd Sourcing Activities
