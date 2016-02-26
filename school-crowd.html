@@ -29,7 +29,7 @@ https://github.com/tomtor/school-crowd
 <script src="aes.js"></script>
 <script>
 	var serverBase = 'https://v7f.eu/pdok-demo-data';
-	var server = serverBase + '/d89d5ee2-d347-11e5-9d78-bcaec5c2cce2';
+	var server = serverBase + '/0ff8d17a-dc80-11e5-b7b0-b827eb842aa1';
 
 	var res = [3440.640, 1720.320, 860.160, 430.080, 215.040, 107.520, 53.760, 26.880, 13.440, 6.720, 3.360, 1.680, 0.840, 0.420];
 
@@ -52,7 +52,7 @@ https://github.com/tomtor/school-crowd
 
 	// method that we will use to update the control based on feature properties passed
 	info.update = function (props) {
-	    this._div.innerHTML = '<h4>Your Own Map</h4><br/><b><small>Click to add your data</small></b>';
+	    this._div.innerHTML = '<h4>Je Eigen Kaart</h4><br/><b><small>Klik om toe te voegen</small></b>';
 	};
 	info.addTo(map);
 
@@ -117,21 +117,21 @@ https://github.com/tomtor/school-crowd
 					"<tr class=\"smallrow\"><td>Timestamp:</td><td>" + plotlist[i].properties.timestamp + "</td></tr>" +
 					"<tr class=\"smallrow\"><td>IP info:</td><td>" + plotlist[i].properties.ip_info +
 					"</td></tr><tr/>" +
-					"<tr><td>User:</td><td>" + plotlist[i].properties.user + "</td></tr>" +
-					"<tr><td>Name:</td><td><b>" + plotlist[i].properties.name + "</b></td></tr>" +
-					"<tr><td>Object type:</td><td><b>" + plotlist[i].properties.kind + "</td></tr>";
+					"<tr><td>Gebruiker:</td><td>" + plotlist[i].properties.user + "</td></tr>" +
+					"<tr><td>Naam:</td><td><b>" + plotlist[i].properties.name + "</b></td></tr>" +
+					"<tr><td>Soort:</td><td><b>" + plotlist[i].properties.kind + "</td></tr>";
 				if (plotlist[i].properties.crypt) {
 					pu= pu + "<tr><td><input id=\"delCryptButton\" onclick=\"delSecret('"
-						+plotlist[i].properties.crypt+"');\" type=\"button\" value=\"Delete\"/></td></tr>";
+						+plotlist[i].properties.crypt+"');\" type=\"button\" value=\"Verwijder\"/></td></tr>";
 				}
 				pu= pu + "</table>";
 				var lm= L.geoJson(plotlist[i], {
 					pointToLayer: function (feature, latlng) {
-						if (plotlist[i].properties.kind == "Animal") 
+						if (plotlist[i].properties.kind == "Dier") 
 							geojsonMarkerOptions.fillColor= "#ff0000";
-						else if (plotlist[i].properties.kind == "Tree") 
+						else if (plotlist[i].properties.kind == "Boom") 
 							geojsonMarkerOptions.fillColor= "#00ff00";
-						else if (plotlist[i].properties.kind == "Building") 
+						else if (plotlist[i].properties.kind == "Gebouw") 
 							geojsonMarkerOptions.fillColor= "#0000ff";
 						else
 							geojsonMarkerOptions.fillColor= "#ffffff";
@@ -161,14 +161,14 @@ https://github.com/tomtor/school-crowd
 		var warning= "";
 		if ($("#pwInput").val() == "test")
 			 warning= "(Password is 'test', change it!)";
-		var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\"><tr class=\"smallrow\"><td>Marker at:</td><td><b>" + e.latlng + "</b></td></tr>" +
-			"<tr><td>Name:</td><td><input id=\"nameInput\" type=\"text\"/></td></tr>" +
+		var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\"><tr class=\"smallrow\"><td>Geprikt op:</td><td><b>" + e.latlng + "</b></td></tr>" +
+			"<tr><td>Naam:</td><td><input id=\"nameInput\" type=\"text\"/></td></tr>" +
 			"<tr><td><select id=\"selInput\">" +
-				"<option value=\"Animal\">Animal</option>" +
-				"<option value=\"Tree\">Tree</option>" +
-				"<option value=\"Building\">Building</option>" +
+				"<option value=\"Dier\">Dier</option>" +
+				"<option value=\"Boom\">Boom</option>" +
+				"<option value=\"Gebouw\">Gebouw</option>" +
 			"</select></td></tr>" +
-			"<tr><td><input id=\"addButton\" type=\"button\" value=\"Add\"/></td><td style=\"color: red;\">"+warning+"</td></tr></table>";
+			"<tr><td><input id=\"addButton\" type=\"button\" value=\"Toevoegen\"/></td><td style=\"color: red;\">"+warning+"</td></tr></table>";
 		if (lastMark)
 			map.removeLayer(lastMark);
 		lastMark = L.marker(e.latlng);
@@ -176,7 +176,7 @@ https://github.com/tomtor/school-crowd
 
 		$("#addButton").click(function(event) {
 			if ($("#nameInput").val().length == 0) {
-				alert("Name is required...");
+				alert("Naam is verplicht...");
 				return;
 			}
 			var gjf = {
@@ -195,16 +195,16 @@ https://github.com/tomtor/school-crowd
 			map.closePopup();
 			var msg= server + '/add/' + JSON.stringify(gjf);
 			$.ajax({url: msg, success: function(result){
-				var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\"><tr class=\"smallrow\"><td>Secret Key:</td><td>"
-				+ result + "</td></tr><tr><td>Name:</td><td><b>" + gjf.properties.name + "</td></tr>" +
-				"<tr><td>Object type:</td><td><b>" +  gjf.properties.kind + "</b></td></tr>" +
-				"<tr><td><input id=\"delButton\" onclick=\"delObject('"+result+"')\" type=\"button\" value=\"Delete\"/></td></tr>";
+				var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\"><tr class=\"smallrow\"><td>Geheime Sleutel:</td><td>"
+				+ result + "</td></tr><tr><td>Naam:</td><td><b>" + gjf.properties.name + "</td></tr>" +
+				"<tr><td>Soort:</td><td><b>" +  gjf.properties.kind + "</b></td></tr>" +
+				"<tr><td><input id=\"delButton\" onclick=\"delObject('"+result+"')\" type=\"button\" value=\"Verwijder\"/></td></tr>";
 				markers[result]= lastMark;
 				lastMark.bindLabel(gjf.properties.name).addTo(map).bindPopup(pu);
 				lastMark= null;
 				var row= $("#keyTable")[0].insertRow(1);
 				row.setAttribute("id",result);
-				row.innerHTML= "<td><input id=\"delButton2\" onclick=\"delObject('"+result+"')\" type=\"button\" value=\"Delete\"/></td>"
+				row.innerHTML= "<td><input id=\"delButton2\" onclick=\"delObject('"+result+"')\" type=\"button\" value=\"Verwijder\"/></td>"
 					+ "<td><b>" + gjf.properties.name + "</b></td><td>" + result + "</td>";
 		
 				if ($("#pwInput").val().length > 0) {
@@ -223,15 +223,15 @@ https://github.com/tomtor/school-crowd
 <div class="row">
 <div class="col-sm-4">
 <table id="userpw" class="table">
-<tr><td>User:</td><td><input id="idInput" size="15" type="text" value="Demo"/></td></tr>
-<tr><td>Password:</td><td><input id="pwInput" size="15" value="test" type="text"/></td></tr>
+<tr><td>Gebruiker:</td><td><input id="idInput" size="15" type="text" value="Demo"/></td></tr>
+<tr><td>Wachtwoord:</td><td><input id="pwInput" size="15" value="test" type="text"/></td></tr>
 </table>
 </div>
 <div class="col-sm-8">
 <div id="delTable" class="smallerrow">
 <table id="keyTable" class="table table-condensed" >
 <tr>
-<th style="text-align:left;width:15%">Added<br/>Objects</th><th style="text-align:left;width:25%;">Name</th><th style="width:60%; text-align:left">Secret key</th>
+<th style="text-align:left;width:15%">Toegevoegd</th><th style="text-align:left;width:25%;">Naam</th><th style="width:60%; text-align:left">Geheime Sleutel</th>
 </tr>
 </table>
 </div>
@@ -239,28 +239,7 @@ https://github.com/tomtor/school-crowd
 </div>
 <p></p>
 <div id="helpDiv">
-<p>On each mouse click a new object is added to the map and made visible for every visitor.</p>
-<p>
-You can delete them in the same session as long as you don't refresh the page.
-You may also delete objects in a later session if you use the same password as in the creating session.
+<p>Hulp...
 </p>
-<p>The data is stored in an SqlLite or PostgreSQL server database, it is 
-cleared every day...</p>
-</div>
-<hr/>
-<h2>Create your own database by entering your eMail:</h2>
-Mail: <input id="eMail" type="text"><br/>
-<br/><input id="eMailButton" type="submit"/>
-<p></p>
-</div>
-
-<script>
-	$("#eMailButton").click(function(event) {
-		var msg= serverBase + '/create/' + $("#eMail").val();
-		$.ajax({url: msg, success: function(result){}});
-		$("#eMail")[0].value= "Read your mail...";
-	});
-</script>
-
 </body>
 </html>
