@@ -98,7 +98,7 @@ https://github.com/tomtor/school-crowd
 				delObject(privKey);
 				markers[crypt]= null;
 			} else
-				alert("Wrong password...");
+				alert("Verkeerd Wachtwoord...");
 		}
 	}
 
@@ -160,7 +160,7 @@ https://github.com/tomtor/school-crowd
 	function onMapClick(e) {
 		var warning= "";
 		if ($("#pwInput").val() == "test")
-			 warning= "(Password is 'test', change it!)";
+			 warning= "(Wachtwoord is 'test', kies een betere!)";
 		var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\"><tr class=\"smallrow\"><td>Geprikt op:</td><td><b>" + e.latlng + "</b></td></tr>" +
 			"<tr><td>Naam:</td><td><input id=\"nameInput\" type=\"text\"/></td></tr>" +
 			"<tr><td><select id=\"selInput\">" +
