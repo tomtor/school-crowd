@@ -21,6 +21,7 @@ https://github.com/tomtor/school-crowd
 </head>
 <body>
 <div class="container">
+<div id="dpi" style="height: 1in; left: -100%; position: absolute; top: -100%; width: 1in;"></div>
 <div id="map"></div>
 <script src="leaflet.js"></script>
 <script src="https://rawgithub.com/kartena/Proj4Leaflet/master/lib/proj4-compressed.js"></script>
@@ -68,6 +69,9 @@ https://github.com/tomtor/school-crowd
 
 	$.ajax({url: server+"/get/", success: function(result){ markersReceived(result) }});
 
+  function getDPI() {
+    return document.getElementById("dpi").offsetHeight;
+  }
 	function hex2a(hexx) {
 		var hex = hexx.toString();//force conversion
 		var str = '';
@@ -116,7 +120,7 @@ https://github.com/tomtor/school-crowd
 
 	function markersReceived(result) {
 		var geojsonMarkerOptions = {
-			radius: 8,
+			radius: getDPI()/8,
 			color: "#000",
 			weight: 1,
 			opacity: 1,
