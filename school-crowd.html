@@ -84,6 +84,18 @@ https://github.com/tomtor/school-crowd
 		}
 		return arr1.join('');
 	}
+	
+	function setCharAt(str,index,chr) {
+	        if(index > str.length-1) return str;
+	        return str.substr(0,index) + chr + str.substr(index+1);
+	}
+
+	function UTC2Local(str) {
+		var hour= (parseInt(str.substring(11,13)) + 1).toString();
+		str= setCharAt(str, 11, hour.charAt(0));
+		str= setCharAt(str, 12, hour.charAt(1));
+		return str;
+	}
 
 	markers = {};
 
@@ -114,7 +126,7 @@ https://github.com/tomtor/school-crowd
 		for (i= 0; i < plotlist.length; i++) {
 			try {
 				pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\"><tr class=\"smallrow\"><td>UUID:</td><td>" + plotlist[i].properties.uuid + "</td></tr>" +
-					"<tr class=\"smallrow\"><td>Tijdstip:</td><td>" + plotlist[i].properties.timestamp + "</td></tr>" +
+					"<tr class=\"smallrow\"><td>Tijdstip:</td><td>" + UTC2Local(plotlist[i].properties.timestamp) + "</td></tr>" +
 					"<tr class=\"smallrow\"><td>IP info:</td><td>" + plotlist[i].properties.ip_info +
 					"</td></tr><tr/>" +
 					"<tr><td>Gebruiker:</td><td>" + plotlist[i].properties.user + "</td></tr>" +
