@@ -18,7 +18,7 @@ https://github.com/tomtor/school-crowd
 </head>
 <body>
 <div class="container">
-<div id="map"></div>
+<div id="map" style="margin: -1px; margin-top: 0.1cm;"></div>
 <div id="dpi" style="height: 1in; left: -100%; position: absolute; top: -100%; width: 1in;"></div>
 <script src="leaflet.js"></script>
 <script src="https://rawgithub.com/kartena/Proj4Leaflet/master/lib/proj4-compressed.js"></script>
@@ -115,13 +115,13 @@ https://github.com/tomtor/school-crowd
 				delObject(privKey);
 				markers[crypt]= null;
 			} else
-				alert("Verkeerd Wachtwoord...");
+				alert("Verkeerd wachtwoord...");
 		}
 	}
 
 	function markersReceived(result) {
 		var geojsonMarkerOptions = {
-			radius: getDPI()/8,
+			radius: getDPI()/10,
 			color: "#000",
 			weight: 1,
 			opacity: 1,
@@ -243,8 +243,11 @@ https://github.com/tomtor/school-crowd
   <div class="row">
     <div class="col-sm-4">
     <table id="userpw" class="table">
-    <tr><td>Gebruiker:</td><td><input id="idInput" size="15" type="text" value="Demo"/></td></tr>
-    <tr><td>Wachtwoord:</td><td><input id="pwInput" size="15" value="test" type="text"/></td></tr>
+    <tr><td class="identity">Gebruiker:</td><td><input id="idInput" size="15" type="text" value="Demo"/></td></tr>
+    <tr><td class="identity">Wachtwoord:</td><td><input id="pwInput" size="15" value="test" type="text"/></td></tr>
+		<tr><td><div id="helpDiv">
+			<p>Hulp...</p>
+		</div></td></tr>
     </table>
     </div>
     <div class="col-sm-8">
@@ -256,10 +259,6 @@ https://github.com/tomtor/school-crowd
         </table>
       </div>
     </div>
-  </div>
-  <div id="helpDiv">
-  <p>Hulp...
-  </p>
   </div>
 </div>
 </body>

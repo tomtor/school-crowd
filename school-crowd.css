@@ -41,12 +41,17 @@
 	color: #777;
 }
 
-body { font-family: Helvetica, Verdana, Arial, sans-serif }
+body {
+	font-family: Helvetica, Verdana, Arial, sans-serif;
+	background-color: #007395;
+}
 p { font-family: Helvetica, Verdana, Arial, sans-serif }
+
+.identity, #helpDiv { color: white; }
 
 #delTable {
 	background-color: lightblue;
-	height: 4cm;
+	/* height: 4cm; */
 	/* border: 2px solid mediumblue; */
 	overflow: auto;
 }
