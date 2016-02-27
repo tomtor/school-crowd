@@ -156,7 +156,7 @@ https://github.com/tomtor/school-crowd
 					}
 				});
 				if (!hasTouch)
-					lm= bindLabel(plotlist[i].properties.name);
+					lm= lm.bindLabel(plotlist[i].properties.name);
 				lm.addTo(map).bindPopup(pu);
 				if (plotlist[i].properties.crypt) {
 					markers[plotlist[i].properties.crypt]= lm;
