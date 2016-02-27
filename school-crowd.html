@@ -223,9 +223,10 @@ https://github.com/tomtor/school-crowd
 	function onMapClick(e) {
 		var warning= "";
 		if ($("#pwInput").val() == "test")
-			 warning= "(Wachtwoord is 'test', kies een betere!)";
-		var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\"><tr class=\"smallrow\"><td>Geprikt op:</td><td><b>" + e.latlng + "</b></td></tr>" +
-			"<tr><td>Naam:</td><td><input id=\"nameInput\" type=\"text\"/></td></tr>" +
+			 warning= "(Wachtwoord is 'test',<br/>kies een betere!)";
+		var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\">" +
+			// "<tr class=\"smallrow\"><td>Geprikt op:</td><td><b>" + e.latlng + "</b></td></tr>" +
+			"<tr><td>Naam:</td><td><input id=\"nameInput\" size=\"14\" type=\"text\"/></td></tr>" +
 			"<tr><td><select id=\"selInput\">" +
 				"<option value=\"Dier\">Dier</option>" +
 				"<option value=\"Boom\">Boom</option>" +
