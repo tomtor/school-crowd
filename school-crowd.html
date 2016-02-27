@@ -111,9 +111,9 @@ https://github.com/tomtor/school-crowd
 
 	$.ajax({url: server+"/get/", success: function(result){ markersReceived(result) }});
 
-  function getDPI() {
-    return document.getElementById("dpi").offsetHeight;
-  }
+	function getDPI() {
+		return document.getElementById("dpi").offsetHeight;
+	}
 
 	function hex2a(hexx) {
 		var hex = hexx.toString();//force conversion
