@@ -17,12 +17,6 @@
 	}
 }
 
-/* does not work on Chrome, loaded tiles dames the corners :-/
-.leaflet-container {
-	border-radius: 10px;
-}
-*/
-
 #userpw td {
 	border-top: none !important; 
 }
