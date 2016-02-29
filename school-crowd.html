@@ -290,7 +290,7 @@ https://github.com/tomtor/school-crowd
 				lastMark= null;
 				var row= $("#keyTable")[0].insertRow(1);
 				row.setAttribute("id",result);
-				row.innerHTML= "<td><button id=\"delButton2\" class=\"btn btn-warning\" onclick=\"delObject('"+result+"')\" type=\"button\">Verwijder</button></td>"
+				row.innerHTML= "<td><button id=\"delButton2\" class=\"btn btn-warning btn-sm\" onclick=\"delObject('"+result+"')\" type=\"button\">Verwijder</button></td>"
 					+ "<td><b>" + gjf.properties.name + "</b></td><td>" + result + "</td>";
 		
 				if ($("#pwInput").val().length > 0) {
@@ -319,7 +319,7 @@ https://github.com/tomtor/school-crowd
       <div id="delTable" class="smallerrow">
         <table id="keyTable" class="table table-condensed" >
         <tr>
-        <th style="text-align:left;width:15%">Toegevoegd</th><th style="text-align:left;width:25%;">Naam</th><th style="width:60%; text-align:left">Geheime Sleutel</th>
+        <th style="text-align:center; width:15%">Toegevoegd</th><th style="text-align:left;width:25%;">Naam</th><th style="width:60%; text-align:left">Geheime Sleutel</th>
         </tr>
         </table>
       </div>
