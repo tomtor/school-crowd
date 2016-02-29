@@ -199,12 +199,11 @@ https://github.com/tomtor/school-crowd
 					"</td></tr><tr/>" +
 					"<tr><td>Gebruiker:</td><td>" + plotlist[i].properties.user + "</td></tr>" +
 					"<tr><td>Naam:</td><td><b>" + plotlist[i].properties.name + "</b></td></tr>" +
-					"<tr><td>Soort:</td><td><b>" + plotlist[i].properties.kind + "</td></tr>";
+					"<tr><td>Soort:</td><td><b>" + plotlist[i].properties.kind + "</td></tr></table>";
 				if (plotlist[i].properties.crypt) {
-					pu= pu + "<tr><td><button id=\"delCryptButton\" class=\"btn btn-danger\" onclick=\"delSecret('"
-						+plotlist[i].properties.crypt+"');\" type=\"button\">Verwijder</button></td></tr>";
+					pu= pu + "<button id=\"delCryptButton\" class=\"btn btn-danger btn-sm btn-block\" onclick=\"delSecret('"
+						+plotlist[i].properties.crypt+"');\" type=\"button\">Verwijder</button>";
 				}
-				pu= pu + "</table>";
 				var lm= L.geoJson(plotlist[i], {
 					pointToLayer: function (feature, latlng) {
 						if (plotlist[i].properties.kind == "Dier") 
@@ -243,7 +242,7 @@ https://github.com/tomtor/school-crowd
 	function onMapClick(e) {
 		var warning= "";
 		if ($("#pwInput").val() == "test")
-			 warning= "(Wachtwoord is 'test',<br/>kies een betere!)";
+			 warning= "(Wachtwoord is 'test', kies een betere!)";
 		var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\">" +
 			// "<tr class=\"smallrow\"><td>Geprikt op:</td><td><b>" + e.latlng + "</b></td></tr>" +
 			"<tr><td>Naam:</td><td><input id=\"nameInput\" size=\"14\" type=\"text\"/></td></tr>" +
@@ -251,8 +250,9 @@ https://github.com/tomtor/school-crowd
 				"<option value=\"Dier\">Dier</option>" +
 				"<option value=\"Boom\">Boom</option>" +
 				"<option value=\"Gebouw\">Gebouw</option>" +
-			"</select></td></tr>" +
-			"<tr><td><button id=\"addButton\" class=\"btn btn-success\" type=\"button\">Toevoegen</button></td><td style=\"color: red;\">"+warning+"</td></tr></table>";
+			"</select></td></tr></table>" +
+			"<div style=\"color: red;\">"+warning+"</div>" +
+			"<button id=\"addButton\" class=\"btn btn-success btn-sm btn-block\" type=\"button\">Toevoegen</button>";
 		if (lastMark)
 			map.removeLayer(lastMark);
 		lastMark = L.marker(e.latlng);
@@ -281,8 +281,8 @@ https://github.com/tomtor/school-crowd
 			$.ajax({url: msg, success: function(result){
 				var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\"><tr class=\"smallrow\"><td>Geheime Sleutel:</td><td>"
 				+ result + "</td></tr><tr><td>Naam:</td><td><b>" + gjf.properties.name + "</td></tr>" +
-				"<tr><td>Soort:</td><td><b>" +  gjf.properties.kind + "</b></td></tr>" +
-				"<tr><td><button id=\"delButton\" onclick=\"delObject('"+result+"')\" type=\"button\" class=\"btn btn-warning\">Verwijder</button></td></tr>";
+				"<tr><td>Soort:</td><td><b>" +  gjf.properties.kind + "</b></td></tr></table>" +
+				"<button id=\"delButton\" onclick=\"delObject('"+result+"')\" type=\"button\" class=\"btn btn-warning btn-sm btn-block\">Verwijder</button>";
 				markers[result]= lastMark;
 				if (!hasTouch)
 					lastMark= lastMark.bindLabel(gjf.properties.name);
