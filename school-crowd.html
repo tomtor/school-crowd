@@ -201,8 +201,8 @@ https://github.com/tomtor/school-crowd
 					"<tr><td>Naam:</td><td><b>" + plotlist[i].properties.name + "</b></td></tr>" +
 					"<tr><td>Soort:</td><td><b>" + plotlist[i].properties.kind + "</td></tr>";
 				if (plotlist[i].properties.crypt) {
-					pu= pu + "<tr><td><input id=\"delCryptButton\" onclick=\"delSecret('"
-						+plotlist[i].properties.crypt+"');\" type=\"button\" value=\"Verwijder\"/></td></tr>";
+					pu= pu + "<tr><td><button id=\"delCryptButton\" class=\"btn btn-danger\" onclick=\"delSecret('"
+						+plotlist[i].properties.crypt+"');\" type=\"button\">Verwijder</button></td></tr>";
 				}
 				pu= pu + "</table>";
 				var lm= L.geoJson(plotlist[i], {
@@ -252,7 +252,7 @@ https://github.com/tomtor/school-crowd
 				"<option value=\"Boom\">Boom</option>" +
 				"<option value=\"Gebouw\">Gebouw</option>" +
 			"</select></td></tr>" +
-			"<tr><td><input id=\"addButton\" type=\"button\" value=\"Toevoegen\"/></td><td style=\"color: red;\">"+warning+"</td></tr></table>";
+			"<tr><td><button id=\"addButton\" class=\"btn btn-success\" type=\"button\">Toevoegen</button></td><td style=\"color: red;\">"+warning+"</td></tr></table>";
 		if (lastMark)
 			map.removeLayer(lastMark);
 		lastMark = L.marker(e.latlng);
@@ -282,7 +282,7 @@ https://github.com/tomtor/school-crowd
 				var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\"><tr class=\"smallrow\"><td>Geheime Sleutel:</td><td>"
 				+ result + "</td></tr><tr><td>Naam:</td><td><b>" + gjf.properties.name + "</td></tr>" +
 				"<tr><td>Soort:</td><td><b>" +  gjf.properties.kind + "</b></td></tr>" +
-				"<tr><td><input id=\"delButton\" onclick=\"delObject('"+result+"')\" type=\"button\" value=\"Verwijder\"/></td></tr>";
+				"<tr><td><button id=\"delButton\" onclick=\"delObject('"+result+"')\" type=\"button\" class=\"btn btn-warning\">Verwijder</button></td></tr>";
 				markers[result]= lastMark;
 				if (!hasTouch)
 					lastMark= lastMark.bindLabel(gjf.properties.name);
@@ -290,7 +290,7 @@ https://github.com/tomtor/school-crowd
 				lastMark= null;
 				var row= $("#keyTable")[0].insertRow(1);
 				row.setAttribute("id",result);
-				row.innerHTML= "<td><input id=\"delButton2\" onclick=\"delObject('"+result+"')\" type=\"button\" value=\"Verwijder\"/></td>"
+				row.innerHTML= "<td><button id=\"delButton2\" class=\"btn btn-warning\" onclick=\"delObject('"+result+"')\" type=\"button\">Verwijder</button></td>"
 					+ "<td><b>" + gjf.properties.name + "</b></td><td>" + result + "</td>";
 		
 				if ($("#pwInput").val().length > 0) {
