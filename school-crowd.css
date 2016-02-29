@@ -2,10 +2,8 @@
 .logo img { background-color: white; padding: 2px; }
 
 body {
-	font-family: Helvetica, Verdana, Arial, sans-serif;
 	background-color: #007395;
 }
-p { font-family: Helvetica, Verdana, Arial, sans-serif }
 
 #heading {
 	padding: 10px;
