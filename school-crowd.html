@@ -284,7 +284,9 @@ https://github.com/tomtor/school-crowd
 				"<tr><td>Soort:</td><td><b>" +  gjf.properties.kind + "</b></td></tr>" +
 				"<tr><td><input id=\"delButton\" onclick=\"delObject('"+result+"')\" type=\"button\" value=\"Verwijder\"/></td></tr>";
 				markers[result]= lastMark;
-				lastMark.bindLabel(gjf.properties.name).addTo(map).bindPopup(pu);
+				if (!hasTouch)
+					lastMark= lastMark.bindLabel(gjf.properties.name);
+				lastMark.addTo(map).bindPopup(pu);
 				lastMark= null;
 				var row= $("#keyTable")[0].insertRow(1);
 				row.setAttribute("id",result);
