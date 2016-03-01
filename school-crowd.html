@@ -36,7 +36,7 @@ https://github.com/tomtor/school-crowd
 <link rel="stylesheet" href="leaflet.css" />
 <link rel="stylesheet" href="leaflet.label.css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://domoritz.github.io/leaflet-locatecontrol/dist/L.Control.Locate.min.css" />
+<link rel="stylesheet" href="L.Control.Locate.min.css" />
 <link rel="stylesheet" href="school-crowd.css" />
 </head>
 <body>
@@ -50,7 +50,7 @@ https://github.com/tomtor/school-crowd
 <div id="dpi" style="height: 1in; left: -100%; position: absolute; top: -100%; width: 1in;"></div>
 <script src="leaflet.js"></script>
 <script src="https://rawgithub.com/kartena/Proj4Leaflet/master/lib/proj4-compressed.js"></script>
-<script src="https://domoritz.github.io/leaflet-locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+<script src="L.Control.Locate.min.js" charset="utf-8"></script>
 <script src="leaflet.label.js"></script>
 <script src="proj4leaflet.js"></script>
 <script src="aes.js"></script>
@@ -242,7 +242,7 @@ https://github.com/tomtor/school-crowd
 	function onMapClick(e) {
 		var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\">" +
 			"<tr><td>Naam:</td><td><input id=\"nameInput\" size=\"14\" type=\"text\"/></td></tr>" +
-			"<tr><td><select id=\"selInput\">" +
+			"<tr><td>Kies:</td><td><select id=\"selInput\" class=\"form-control\">" +
 				"<option value=\"Dier\">Dier</option>" +
 				"<option value=\"Boom\">Boom</option>" +
 				"<option value=\"Gebouw\">Gebouw</option>" +
