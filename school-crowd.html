@@ -48,6 +48,47 @@ https://github.com/tomtor/school-crowd
 </div>
 <div id="map" style="margin-top: -12px; margin-right: -2px;"></div>
 <div id="dpi" style="height: 1in; left: -100%; position: absolute; top: -100%; width: 1in;"></div>
+
+<div id="wrongPW" class="modal fade" role="dialog">
+<div class="modal-dialog"> <div class="modal-content"> <div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">Let Op</h4>
+</div>
+<div class="modal-body">
+<div class="alert alert-warning"><strong>Verkeerd wachtwoord ingevuld!<strong></div>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+</div> </div> </div>
+</div>
+
+<div id="noPW" class="modal fade" role="dialog">
+<div class="modal-dialog"> <div class="modal-content"> <div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">Let Op</h4>
+</div>
+<div class="modal-body">
+<div class="alert alert-info"><strong>Geen Wachtwoord of Gebruikersnaam ingevuld<strong></div>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+</div> </div> </div>
+</div>
+
+<div id="noName" class="modal fade" role="dialog">
+<div class="modal-dialog"> <div class="modal-content"> <div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">Let Op</h4>
+</div>
+<div class="modal-body">
+<div class="alert alert-info"><strong>Naam is verplicht<strong></div>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+</div> </div> </div>
+</div>
+
+
 <script src="leaflet.js"></script>
 <script src="https://rawgithub.com/kartena/Proj4Leaflet/master/lib/proj4-compressed.js"></script>
 <script src="L.Control.Locate.min.js" charset="utf-8"></script>
@@ -178,9 +219,9 @@ https://github.com/tomtor/school-crowd
 				delObject(privKey);
 				markers[crypt]= null;
 			} else
-				alert("Verkeerd wachtwoord...");
+				$("#wrongPW").modal();
 		} else
-				alert("Geen wachtwoord...");
+				$("#noPW").modal();
 	}
 
 	function markersReceived(result) {
@@ -256,11 +297,11 @@ https://github.com/tomtor/school-crowd
 
 		$("#addButton").click(function(event) {
 			if ($("#pwInput").val() == "" || $("#idInput").val == "") {
-				alert("Naam en Wachtwoord zijn verplicht...");
+				$("#noPW").modal();
 				return;
 			}
 			if ($("#nameInput").val().length == 0) {
-				alert("Naam is verplicht...");
+				$("#noName").modal();
 				return;
 			}
 			var gjf = {
