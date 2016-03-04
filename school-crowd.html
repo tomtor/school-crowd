@@ -184,8 +184,12 @@ https://github.com/tomtor/school-crowd
 	function decode( str ) {
 		if (str.substring(0, 4) != "http")
 			str= "http://" + str;
-		// decode |, ', ", &, > and < to / 
-		return str.replace(/[\|\'\&\>\<\"]/g, '\/');
+		// decode |, ', ", >, < and space to / 
+		return str.replace(/[\|\'\>\<\"\ ]/g, '\/');
+	}
+	function xss( str ) {
+		// decode &, ', ", >, <
+		return str.replace(/[\'\>\<\"\&]/g, '?');
 	}
 	function clean( str ) {
 		return str.replace(/[^a-zA-Z0-9\-éëèáäàï]+/g, " ");
@@ -254,15 +258,15 @@ https://github.com/tomtor/school-crowd
 					"<tr class=\"smallrow\"><td>Tijdstip:</td><td>" + UTC2Local(plotlist[i].properties.timestamp) + "</td></tr>" +
 					"<tr class=\"smallrow\"><td>IP info:</td><td>" + plotlist[i].properties.ip_info +
 					"</td></tr><tr/>" +
-					"<tr><td>Gebruiker:</td><td>" + plotlist[i].properties.user + "</td></tr>" +
-					"<tr><td>Omschrijving:</td><td><b>" + plotlist[i].properties.name + "</b></td></tr>" +
+					"<tr><td>Gebruiker:</td><td>" + xss(plotlist[i].properties.user) + "</td></tr>" +
+					"<tr><td>Omschrijving:</td><td><b>" + xss(plotlist[i].properties.name) + "</b></td></tr>" +
 					(plotlist[i].properties.objlink ?
 						("<tr><td>Link:</td><td><b><a href=\"" + decode(plotlist[i].properties.objlink) + "\" target=\"_blank\">toon</a></b></td></tr>")
 						: "") +
-					"<tr><td>Soort:</td><td><b>" + plotlist[i].properties.kind + "</td></tr></table>";
+					"<tr><td>Soort:</td><td><b>" + xss(plotlist[i].properties.kind) + "</td></tr></table>";
 				if (plotlist[i].properties.crypt) {
 					pu= pu + "<button id=\"delCryptButton\" class=\"btn btn-danger btn-sm btn-block\" onclick=\"delSecret('"
-						+plotlist[i].properties.crypt+"');\" type=\"button\">Verwijder</button>";
+						+xss(plotlist[i].properties.crypt)+"');\" type=\"button\">Verwijder</button>";
 				}
 				var lm= L.geoJson(plotlist[i], {
 					pointToLayer: function (feature, latlng) {
@@ -278,7 +282,7 @@ https://github.com/tomtor/school-crowd
 					}
 				});
 				if (!hasTouch)
-					lm= lm.bindLabel(plotlist[i].properties.name);
+					lm= lm.bindLabel(xss(plotlist[i].properties.name));
 				lm.addTo(map).bindPopup(pu);
 				if (plotlist[i].properties.crypt) {
 					markers[plotlist[i].properties.crypt]= lm;
@@ -342,20 +346,20 @@ https://github.com/tomtor/school-crowd
 			var msg= server + '/add/' + JSON.stringify(gjf);
 			$.ajax({url: msg, success: function(result){
 				var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\"><tr class=\"smallrow\"><td>Geheime Sleutel:</td><td>"
-				+ result + "</td></tr><tr><td>Omschrijving:</td><td><b>" + gjf.properties.name + "</td></tr>" +
+				+ result + "</td></tr><tr><td>Omschrijving:</td><td><b>" + xss(gjf.properties.name) + "</td></tr>" +
 				(gjf.properties.objlink ?
 					("<tr><td>Link:</td><td><b><a href=\"" +  decode(gjf.properties.objlink) + "\" target=\"_blank\">toon</a></b></td></tr>") : "") +
-				"<tr><td>Soort:</td><td><b>" +  gjf.properties.kind + "</b></td></tr></table>" +
+				"<tr><td>Soort:</td><td><b>" +  xss(gjf.properties.kind) + "</b></td></tr></table>" +
 				"<button id=\"delButton\" onclick=\"delObject('"+result+"')\" type=\"button\" class=\"btn btn-warning btn-sm btn-block\">Verwijder</button>";
 				markers[result]= lastMark;
 				if (!hasTouch)
-					lastMark= lastMark.bindLabel(gjf.properties.name);
+					lastMark= lastMark.bindLabel(xss(gjf.properties.name));
 				lastMark.addTo(map).bindPopup(pu);
 				lastMark= null;
 				var row= $("#keyTable")[0].insertRow(1);
 				row.setAttribute("id",result);
 				row.innerHTML= "<td><button id=\"delButton2\" class=\"btn btn-warning btn-sm\" onclick=\"delObject('"+result+"')\" type=\"button\">Verwijder</button></td>"
-					+ "<td><b>" + gjf.properties.name + "</b></td><td>" + result + "</td>";
+					+ "<td><b>" + xss(gjf.properties.name) + "</b></td><td>" + result + "</td>";
 		
 				if ($("#pwInput").val().length > 0) {
 					gjf.properties.crypt= a2hex(CryptoJS.AES.encrypt(result, $("#pwInput").val())+"");
