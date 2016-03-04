@@ -177,11 +177,17 @@ https://github.com/tomtor/school-crowd
 		return document.getElementById("dpi").offsetHeight;
 	}
 
-	function addslashes( str ) {
-		return (str + '').replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
+	function encode( str ) {
+		// encode / as '
+		return str.replace(/[\/]/g, "'");
+	}
+	function decode( str ) {
+		if (str.substring(0, 4) != "http")
+			str= "http://" + str;
+		return str.replace(/[\'\<]/g, '\/');
 	}
 	function clean( str ) {
-		return (str + '').replace(/[^a-zA-Z0-9\-éëèáäàï]+/g, " ");
+		return str.replace(/[^a-zA-Z0-9\-éëèáäàï]+/g, " ");
 	}
 
 	function hex2a(hexx) {
@@ -250,7 +256,7 @@ https://github.com/tomtor/school-crowd
 					"<tr><td>Gebruiker:</td><td>" + plotlist[i].properties.user + "</td></tr>" +
 					"<tr><td>Omschrijving:</td><td><b>" + plotlist[i].properties.name + "</b></td></tr>" +
 					(plotlist[i].properties.objlink ?
-						("<tr><td>Link:</td><td><b><a href=\"" + hex2a(plotlist[i].properties.objlink) + "\" target=\"_blank\">toon</a></b></td></tr>")
+						("<tr><td>Link:</td><td><b><a href=\"" + decode(plotlist[i].properties.objlink) + "\" target=\"_blank\">toon</a></b></td></tr>")
 						: "") +
 					"<tr><td>Soort:</td><td><b>" + plotlist[i].properties.kind + "</td></tr></table>";
 				if (plotlist[i].properties.crypt) {
@@ -325,7 +331,7 @@ https://github.com/tomtor/school-crowd
 				},
 				"properties" : {
 					"name" : clean($("#nameInput").val()),
-					"objlink": $("#linkInput").val().length ? a2hex($("#linkInput").val()) : null,
+					"objlink": $("#linkInput").val().length ? encode($("#linkInput").val()) : null,
 					"kind" : $("#selInput").val(),
 					"user" : $("#idInput").val()
 				}
@@ -337,7 +343,7 @@ https://github.com/tomtor/school-crowd
 				var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\"><tr class=\"smallrow\"><td>Geheime Sleutel:</td><td>"
 				+ result + "</td></tr><tr><td>Omschrijving:</td><td><b>" + gjf.properties.name + "</td></tr>" +
 				(gjf.properties.objlink ?
-					("<tr><td>Link:</td><td><b><a href=\"" +  hex2a(gjf.properties.objlink) + "\" target=\"_blank\">toon</a></b></td></tr>") : "") +
+					("<tr><td>Link:</td><td><b><a href=\"" +  decode(gjf.properties.objlink) + "\" target=\"_blank\">toon</a></b></td></tr>") : "") +
 				"<tr><td>Soort:</td><td><b>" +  gjf.properties.kind + "</b></td></tr></table>" +
 				"<button id=\"delButton\" onclick=\"delObject('"+result+"')\" type=\"button\" class=\"btn btn-warning btn-sm btn-block\">Verwijder</button>";
 				markers[result]= lastMark;
