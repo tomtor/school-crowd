@@ -254,9 +254,9 @@ https://github.com/tomtor/school-crowd
 		var plotlist= result;
 		for (i= 0; i < plotlist.length; i++) {
 			try {
-				pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\"><tr class=\"smallrow\"><td>UUID:</td><td>" + plotlist[i].properties.uuid + "</td></tr>" +
-					"<tr class=\"smallrow\"><td>Tijdstip:</td><td>" + UTC2Local(plotlist[i].properties.timestamp) + "</td></tr>" +
-					"<tr class=\"smallrow\"><td>IP info:</td><td>" + plotlist[i].properties.ip_info +
+				pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\"><tr class=\"smallrow\"><td>UUID:</td><td>" + xss(plotlist[i].properties.uuid) + "</td></tr>" +
+					"<tr class=\"smallrow\"><td>Tijdstip:</td><td>" + UTC2Local(xss(plotlist[i].properties.timestamp)) + "</td></tr>" +
+					"<tr class=\"smallrow\"><td>IP info:</td><td>" + xss(plotlist[i].properties.ip_info) +
 					"</td></tr><tr/>" +
 					"<tr><td>Gebruiker:</td><td>" + xss(plotlist[i].properties.user) + "</td></tr>" +
 					"<tr><td>Omschrijving:</td><td><b>" + xss(plotlist[i].properties.name) + "</b></td></tr>" +
