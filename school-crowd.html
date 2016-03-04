@@ -178,14 +178,14 @@ https://github.com/tomtor/school-crowd
 	}
 
 	function encode( str ) {
-		// encode / and " as '
-		return str.replace(/[\/\"]/g, "'");
+		// encode / and " as |
+		return str.replace(/[\/\"]/g, "|");
 	}
 	function decode( str ) {
 		if (str.substring(0, 4) != "http")
 			str= "http://" + str;
-		// decode ', ", &, > and < to / 
-		return str.replace(/[\'\&\>\<\"]/g, '\/');
+		// decode |, ', ", &, > and < to / 
+		return str.replace(/[\|\'\&\>\<\"]/g, '\/');
 	}
 	function clean( str ) {
 		return str.replace(/[^a-zA-Z0-9\-éëèáäàï]+/g, " ");
