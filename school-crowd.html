@@ -111,7 +111,7 @@ https://github.com/tomtor/school-crowd
 		resolutions: res
 	});
 
-	var map = L.map('map', {crs:RDM}).setView([52.15, 5.2], 3);
+	var map = L.map('map', {doubleClickZoom:false, crs:RDM}).setView([52.15, 5.2], 3);
 
 	var info = L.control();
 	info.onAdd = function (map) {
@@ -122,7 +122,7 @@ https://github.com/tomtor/school-crowd
 
 	// method that we will use to update the control based on feature properties passed
 	info.update = function (props) {
-	  this._div.innerHTML = '<h4>Je Eigen Kaart</h4><br/><b><small>Klik om toe te voegen</small></b>';
+	  this._div.innerHTML = '<h4>Je Eigen Kaart</h4><br/><b><small>Dubbel-Klik<br/>om toe te voegen</small></b>';
 	};
 	info.addTo(map);
 
@@ -369,7 +369,7 @@ https://github.com/tomtor/school-crowd
 		});
 	}
 
-	map.on('click', onMapClick);
+	map.on('dblclick', onMapClick);
 
 </script>
 <p></p>
