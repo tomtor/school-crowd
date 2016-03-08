@@ -190,15 +190,10 @@ https://github.com/tomtor/school-crowd
 		return document.getElementById("dpi").offsetHeight;
 	}
 
-	function encode( str ) {
-		// encode / and " as |
-		return str.replace(/[\/\"]/g, "|");
-	}
 	function decode( str ) {
 		if (str.substring(0, 4) != "http")
 			str= "http://" + str;
-		// decode |, ', ", >, < and space to / 
-		return str.replace(/[\|\'\>\<\"\ ]/g, '\/');
+		return xss(str);
 	}
 	function xss( str ) {
 		// decode &, ', ", >, <
@@ -336,19 +331,19 @@ https://github.com/tomtor/school-crowd
 				},
 				"properties" : {
 					"name" : clean($("#nameInput").val()),
-					"objlink": $("#linkInput").val().length ? encode($("#linkInput").val()) : null,
+					"objlink": $("#linkInput").val().length ? $("#linkInput").val() : null,
 					"kind" : $("#selInput").val(),
 					"user" : $("#idInput").val()
 				}
 			};
 
 			map.closePopup();
-			var msg= server + '/add/' + JSON.stringify(gjf);
+			var msg= server + '/add/' + encodeURIComponent(JSON.stringify(gjf));
 			$.ajax({url: msg, success: function(result){
 				var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\"><tr class=\"smallrow\"><td>Geheime Sleutel:</td><td>"
 				+ result + "</td></tr><tr><td>Omschrijving:</td><td><b>" + xss(gjf.properties.name) + "</td></tr>" +
 				(gjf.properties.objlink ?
-					("<tr><td>Link:</td><td><b><a href=\"" +  decode(gjf.properties.objlink) + "\" target=\"_blank\">toon</a></b></td></tr>") : "") +
+					("<tr><td>Link:</td><td><b><a href=\"" + decode(gjf.properties.objlink) + "\" target=\"_blank\">toon</a></b></td></tr>") : "") +
 				"<tr><td>Soort:</td><td><b>" +  xss(gjf.properties.kind) + "</b></td></tr></table>" +
 				"<button id=\"delButton\" onclick=\"delObject('"+result+"')\" type=\"button\" class=\"btn btn-warning btn-sm btn-block\">Verwijder</button>";
 				markers[result]= lastMark;
@@ -363,7 +358,7 @@ https://github.com/tomtor/school-crowd
 		
 				if ($("#pwInput").val().length > 0) {
 					gjf.properties.crypt= a2hex(CryptoJS.AES.encrypt(result, $("#pwInput").val())+"");
-					var msg= server + '/update/' + result +'/' + JSON.stringify(gjf);
+					var msg= server + '/update/' + result +'/' + encodeURIComponent(JSON.stringify(gjf));
 					$.ajax({url: msg, success: function(result){} });
 				}
 			}});
