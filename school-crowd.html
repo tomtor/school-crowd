@@ -102,7 +102,10 @@ https://github.com/tomtor/school-crowd
 	</div>
 </div>
 
+<!--
 <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+-->
+<script src="leaflet.js"></script>
 <script src="proj4-compressed.js"></script>
 <script src="L.Control.Locate.min.js" charset="utf-8"></script>
 <script src="leaflet.label.js"></script>
@@ -136,7 +139,7 @@ https://github.com/tomtor/school-crowd
 
 	// method that we will use to update the control based on feature properties passed
 	info.update = function (props) {
-	  this._div.innerHTML = '<h4>Je Eigen Kaart</h4><br/><b><small>Dubbel-Klik<br/>om toe te voegen</small></b>';
+	  this._div.innerHTML = '<h4>Je Eigen Kaart</h4><br/><b><small>Klik om toe te voegen</small></b>';
 	};
 	info.addTo(map);
 
@@ -312,9 +315,22 @@ https://github.com/tomtor/school-crowd
 	}
 
 	lastMark= null;
-	lastEvent= null;
 
-	function addButton() {
+	function onMapDblClick(e) {
+		var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\">" +
+			"<tr><td>Omschrijving:</td><td><input id=\"nameInput\" size=\"14\" type=\"text\"/></td></tr>" +
+			"<tr><td>Link (bv foto):</td><td><input id=\"linkInput\" size=\"14\" type=\"text\"/></td></tr>" +
+			"<tr><td>Kies:</td><td><select id=\"selInput\" class=\"form-control\">" +
+				"<option value=\"Dier\">Dier</option>" +
+				"<option value=\"Boom\">Boom</option>" +
+				"<option value=\"Gebouw\">Gebouw</option>" +
+			"</select></td></tr></table><br/>" +
+			"<button id=\"addButton\" class=\"btn btn-success btn-sm btn-block\" type=\"button\">Toevoegen</button>";
+		if (lastMark)
+			map.removeLayer(lastMark);
+		lastMark = L.marker(e.latlng);
+		lastMark.addTo(map).bindPopup(pu).openPopup();
+		$("#addButton").click(function(event) {
 			if ($("#pwInput").val() == "" || $("#idInput").val == "") {
 				$("#noPW").modal();
 				return;
@@ -327,7 +343,7 @@ https://github.com/tomtor/school-crowd
 				"type": "Feature",
 				"geometry": {
 					"type": "Point",
-					"coordinates": [ lastEvent.latlng.lng, lastEvent.latlng.lat ]
+					"coordinates": [ e.latlng.lng, e.latlng.lat ]
 				},
 				"properties" : {
 					"name" : clean($("#nameInput").val()),
@@ -362,26 +378,21 @@ https://github.com/tomtor/school-crowd
 					$.ajax({url: msg, success: function(result){} });
 				}
 			}});
+		});
 	}
+
+/*
+	map.on('dblclick', onMapDblClick);
 
 	function onMapClick(e) {
-		var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\">" +
-			"<tr><td>Omschrijving:</td><td><input id=\"nameInput\" size=\"14\" type=\"text\"/></td></tr>" +
-			"<tr><td>Link (bv foto):</td><td><input id=\"linkInput\" size=\"14\" type=\"text\"/></td></tr>" +
-			"<tr><td>Kies:</td><td><select id=\"selInput\" class=\"form-control\">" +
-				"<option value=\"Dier\">Dier</option>" +
-				"<option value=\"Boom\">Boom</option>" +
-				"<option value=\"Gebouw\">Gebouw</option>" +
-			"</select></td></tr></table><br/>" +
-			"<button id=\"addButton\" onclick=\"addButton()\" class=\"btn btn-success btn-sm btn-block\" type=\"button\">Toevoegen</button>";
-		if (lastMark)
+		if (lastMark) {
 			map.removeLayer(lastMark);
-		lastMark = L.marker(e.latlng);
-		lastEvent = e;
-		lastMark.addTo(map).bindPopup(pu).openPopup();
+			lastMark= null;
+		}
 	}
+*/
 
-	map.on('dblclick', onMapClick);
+	map.on('click', onMapDblClick);
 
 </script>
 <p></p>
