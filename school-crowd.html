@@ -316,7 +316,7 @@ https://github.com/tomtor/school-crowd
 
 	lastMark= null;
 
-	function onMapDblClick(e) {
+	function onMapClick(e) {
 		var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\">" +
 			"<tr><td>Omschrijving:</td><td><input id=\"nameInput\" size=\"14\" type=\"text\"/></td></tr>" +
 			"<tr><td>Link (bv foto):</td><td><input id=\"linkInput\" size=\"14\" type=\"text\"/></td></tr>" +
@@ -381,18 +381,7 @@ https://github.com/tomtor/school-crowd
 		});
 	}
 
-/*
-	map.on('dblclick', onMapDblClick);
-
-	function onMapClick(e) {
-		if (lastMark) {
-			map.removeLayer(lastMark);
-			lastMark= null;
-		}
-	}
-*/
-
-	map.on('click', onMapDblClick);
+	map.on('click', onMapClick);
 
 </script>
 <p></p>
