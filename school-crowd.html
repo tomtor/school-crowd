@@ -281,12 +281,24 @@ https://github.com/tomtor/school-crowd
 				}
 				var lm= L.geoJson(plotlist[i], {
 					pointToLayer: function (feature, latlng) {
-						if (plotlist[i].properties.kind == "Dier") 
+						if (plotlist[i].properties.kind == "Spoorwegovergang") 
 							geojsonMarkerOptions.fillColor= "#ff0000";
-						else if (plotlist[i].properties.kind == "Boom") 
+						else if (plotlist[i].properties.kind == "Busstation") 
 							geojsonMarkerOptions.fillColor= "#00ff00";
-						else if (plotlist[i].properties.kind == "Gebouw") 
+						else if (plotlist[i].properties.kind == "Brandweerkazerne") 
 							geojsonMarkerOptions.fillColor= "#0000ff";
+						else if (plotlist[i].properties.kind == "Ziekenhuis") 
+							geojsonMarkerOptions.fillColor= "#ff00ff";
+						else if (plotlist[i].properties.kind == "Tankstation") 
+							geojsonMarkerOptions.fillColor= "#00ffff";
+						else if (plotlist[i].properties.kind == "Treinstation") 
+							geojsonMarkerOptions.fillColor= "#ffff00";
+						else if (plotlist[i].properties.kind == "Basisschool") 
+							geojsonMarkerOptions.fillColor= "#8000ff";
+						else if (plotlist[i].properties.kind == "Politiebureau") 
+							geojsonMarkerOptions.fillColor= "#80ff00";
+						else if (plotlist[i].properties.kind == "Middelbare school") 
+							geojsonMarkerOptions.fillColor= "#80ff80";
 						else
 							geojsonMarkerOptions.fillColor= "#ffffff";
 						return L.circleMarker(latlng, geojsonMarkerOptions);
@@ -321,9 +333,15 @@ https://github.com/tomtor/school-crowd
 			"<tr><td>Omschrijving:</td><td><input id=\"nameInput\" size=\"14\" type=\"text\"/></td></tr>" +
 			"<tr><td>Link (bv foto):</td><td><input id=\"linkInput\" size=\"14\" type=\"text\"/></td></tr>" +
 			"<tr><td>Kies:</td><td><select id=\"selInput\" class=\"form-control\">" +
-				"<option value=\"Dier\">Dier</option>" +
-				"<option value=\"Boom\">Boom</option>" +
-				"<option value=\"Gebouw\">Gebouw</option>" +
+				"<option value=\"Spoorwegovergang\">Spoorwegovergang</option>"+
+				"<option value=\"Busstation\">Busstation</option>"+
+				"<option value=\"Brandweerkazerne\">Brandweerkazerne</option>"+ 
+				"<option value=\"Ziekenhuis\">Ziekenhuis</option>"+
+				"<option value=\"Tankstation\">Tankstation</option>"+ 
+				"<option value=\"Treinstation\">Treinstation</option>"+ 
+				"<option value=\"Basisschool\">Basisschool</option>"+ 
+				"<option value=\"Politiebureau\">Politiebureau</option>"+ 
+				"<option value=\"Middelbare school\">Middelbare school</option>"+ 
 			"</select></td></tr></table><br/>" +
 			"<button id=\"addButton\" class=\"btn btn-success btn-sm btn-block\" type=\"button\">Toevoegen</button>";
 		if (lastMark)
