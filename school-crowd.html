@@ -185,20 +185,22 @@ https://github.com/tomtor/school-crowd
 		id: 'brtachtergrondkaart'
 	}).addTo(map);
 
-/*
-images/basisschool-icon.png
-images/brandweerkazerne-icon.png
-images/busstation-icon.png
-images/middelbare-school-icon.png
-images/politiebureau-icon.png
-images/spoorovergang-icon.png
-images/tankstation-icon.png
-images/treinstation-icon.png
-images/ziekenhuis-icon.png
-*/
-  var spoorIcon = L.icon({
-		iconSize: [getDPI()/4,getDPI()/4], iconAnchor: [64,64],
-    iconUrl: 'images/spoorovergang-icon.png'});
+	var CrowdIcon = L.Icon.extend({
+		options: {
+				iconSize: [getDPI()/3,getDPI()/3],
+				iconAnchor: [getDPI()/6,getDPI()/6]
+				// popupAnchor:  [-3, -76]
+			}
+	});
+  var basisIcon = new CrowdIcon({iconUrl: 'images/basisschool-icon.png'}),
+			brandIcon = new CrowdIcon({iconUrl: 'images/brandweerkazerne-icon.png'}),
+			busIcon = new CrowdIcon({iconUrl: 'images/busstation-icon.png'}),
+			middelbareIcon = new CrowdIcon({iconUrl: 'images/middelbare-school-icon.png'}),
+			politieIcon = new CrowdIcon({iconUrl: 'images/politiebureau-icon.png'}),
+			spoorIcon = new CrowdIcon({iconUrl: 'images/spoorovergang-icon.png'}),
+			tankIcon = new CrowdIcon({iconUrl: 'images/tankstation-icon.png'}),
+			treinIcon = new CrowdIcon({iconUrl: 'images/treinstation-icon.png'}),
+			ziekenIcon = new CrowdIcon({iconUrl: 'images/ziekenhuis-icon.png'});
 
 	var popup = L.popup();
 
@@ -302,31 +304,30 @@ images/ziekenhuis-icon.png
 				var lm= L.geoJson(plotlist[i], {
 					pointToLayer: function (feature, latlng) {
 						if (plotlist[i].properties.kind == "Spoorwegovergang") 
-							//geojsonMarkerOptions.fillColor= "#ff0000";
 							return L.marker(latlng, {icon: spoorIcon});
 						else if (plotlist[i].properties.kind == "Busstation") 
-							geojsonMarkerOptions.fillColor= "#00ff00";
+							return L.marker(latlng, {icon: busIcon});
 						else if (plotlist[i].properties.kind == "Brandweerkazerne") 
-							geojsonMarkerOptions.fillColor= "#0000ff";
+							return L.marker(latlng, {icon: brandIcon});
 						else if (plotlist[i].properties.kind == "Ziekenhuis") 
-							geojsonMarkerOptions.fillColor= "#ff00ff";
+							return L.marker(latlng, {icon: ziekenIcon});
 						else if (plotlist[i].properties.kind == "Tankstation") 
-							geojsonMarkerOptions.fillColor= "#00ffff";
+							return L.marker(latlng, {icon: tankIcon});
 						else if (plotlist[i].properties.kind == "Treinstation") 
-							geojsonMarkerOptions.fillColor= "#ffff00";
+							return L.marker(latlng, {icon: treinIcon});
 						else if (plotlist[i].properties.kind == "Basisschool") 
-							geojsonMarkerOptions.fillColor= "#8000ff";
+							return L.marker(latlng, {icon: basisIcon});
 						else if (plotlist[i].properties.kind == "Politiebureau") 
-							geojsonMarkerOptions.fillColor= "#80ff00";
+							return L.marker(latlng, {icon: politieIcon});
 						else if (plotlist[i].properties.kind == "Middelbare school") 
-							geojsonMarkerOptions.fillColor= "#80ff80";
+							return L.marker(latlng, {icon: middelbareIcon});
 						else
 							geojsonMarkerOptions.fillColor= "#ffffff";
 						return L.circleMarker(latlng, geojsonMarkerOptions);
 					}
 				});
-				if (!hasTouch)
-					lm= lm.bindLabel(xss(plotlist[i].properties.name));
+				//if (!hasTouch)
+					//lm= lm.bindLabel(xss(plotlist[i].properties.name));
 				lm.addTo(map).bindPopup(pu);
 				if (plotlist[i].properties.crypt) {
 					markers[plotlist[i].properties.crypt]= lm;
