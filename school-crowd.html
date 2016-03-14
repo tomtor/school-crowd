@@ -185,6 +185,21 @@ https://github.com/tomtor/school-crowd
 		id: 'brtachtergrondkaart'
 	}).addTo(map);
 
+/*
+images/basisschool-icon.png
+images/brandweerkazerne-icon.png
+images/busstation-icon.png
+images/middelbare-school-icon.png
+images/politiebureau-icon.png
+images/spoorovergang-icon.png
+images/tankstation-icon.png
+images/treinstation-icon.png
+images/ziekenhuis-icon.png
+*/
+  var spoorIcon = L.icon({
+		iconSize: [getDPI()/4,getDPI()/4], iconAnchor: [64,64],
+    iconUrl: 'images/spoorovergang-icon.png'});
+
 	var popup = L.popup();
 
 	$.ajax({url: server+"/get/", success: function(result){ markersReceived(result) }});
@@ -287,7 +302,8 @@ https://github.com/tomtor/school-crowd
 				var lm= L.geoJson(plotlist[i], {
 					pointToLayer: function (feature, latlng) {
 						if (plotlist[i].properties.kind == "Spoorwegovergang") 
-							geojsonMarkerOptions.fillColor= "#ff0000";
+							//geojsonMarkerOptions.fillColor= "#ff0000";
+							return L.marker(latlng, {icon: spoorIcon});
 						else if (plotlist[i].properties.kind == "Busstation") 
 							geojsonMarkerOptions.fillColor= "#00ff00";
 						else if (plotlist[i].properties.kind == "Brandweerkazerne") 
