@@ -128,7 +128,28 @@ https://github.com/tomtor/school-crowd
 		resolutions: res
 	});
 
-	var map = L.map('map', {doubleClickZoom:false, crs:RDM}).setView([52.15, 5.2], 3);
+	var achtergrondkaart = L.tileLayer('http://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{y}.png', {
+		tms: true,
+		minZoom: 2,
+		maxZoom: 12,
+		attribution: '<a href="https://github.com/tomtor/PDOK-demo-app">DemoMap</a> Map data &copy; <a href="http://pdok.nl">PDOK</a>',
+		id: 'brtachtergrondkaart'
+	});
+	var luchtfoto = L.tileLayer('http://geodata1.nationaalgeoregister.nl/luchtfoto/tms/1.0.0/luchtfoto_png/EPSG28992/{z}/{x}/{y}.png', {
+		tms: true,
+		minZoom: 2,
+		maxZoom: 12,
+		attribution: '<a href="https://github.com/tomtor/PDOK-demo-app">DemoMap</a> Map data &copy; <a href="http://pdok.nl">PDOK</a>',
+		id: 'luchtfoto'
+	});
+	
+	var map = L.map('map', {doubleClickZoom:false, crs:RDM,
+		layers:[luchtfoto, achtergrondkaart]}).setView([52.15, 5.2], 3);
+	var baseMaps = {
+		"Luchtfoto": luchtfoto,
+		"Kaart": achtergrondkaart
+	};
+	L.control.layers(baseMaps, null, {position: 'topleft'}).addTo(map);
 
 	var info = L.control();
 	info.onAdd = function (map) {
@@ -188,13 +209,6 @@ https://github.com/tomtor/school-crowd
 		locateOptions: {}  // define location options e.g enableHighAccuracy: true or maxZoom: 10
 	}).addTo(map);
 
-	L.tileLayer('http://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{y}.png', {
-		tms: true,
-		minZoom: 2,
-		maxZoom: 12,
-		attribution: '<a href="https://github.com/tomtor/PDOK-demo-app">DemoMap</a> Map data &copy; <a href="http://pdok.nl">PDOK</a>',
-		id: 'brtachtergrondkaart'
-	}).addTo(map);
 
 	var CrowdIcon = L.Icon.extend({
 		options: {
