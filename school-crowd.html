@@ -299,7 +299,7 @@ https://github.com/tomtor/school-crowd
 				$("#noPW").modal();
 	}
 
-	function markersReceived(result) {
+	function createIcon(latlng, kind) {
 		var geojsonMarkerOptions = {
 			radius: getDPI()/10,
 			color: "#000",
@@ -307,6 +307,30 @@ https://github.com/tomtor/school-crowd
 			opacity: 1,
 			fillOpacity: 0.4
 		};
+		if (kind == "Spoorwegovergang") 
+			return L.marker(latlng, {icon: spoorIcon});
+		else if (kind == "Busstation") 
+			return L.marker(latlng, {icon: busIcon});
+		else if (kind == "Brandweerkazerne") 
+			return L.marker(latlng, {icon: brandIcon});
+		else if (kind == "Ziekenhuis") 
+			return L.marker(latlng, {icon: ziekenIcon});
+		else if (kind == "Tankstation") 
+			return L.marker(latlng, {icon: tankIcon});
+		else if (kind == "Treinstation") 
+			return L.marker(latlng, {icon: treinIcon});
+		else if (kind == "Basisschool") 
+			return L.marker(latlng, {icon: basisIcon});
+		else if (kind == "Politiebureau") 
+			return L.marker(latlng, {icon: politieIcon});
+		else if (kind == "Middelbare school") 
+			return L.marker(latlng, {icon: middelbareIcon});
+		else
+			geojsonMarkerOptions.fillColor= "#ffffff";
+		return L.circleMarker(latlng, geojsonMarkerOptions);
+	}
+
+	function markersReceived(result) {
 		var plotlist= result;
 		for (i= 0; i < plotlist.length; i++) {
 			try {
@@ -331,27 +355,7 @@ https://github.com/tomtor/school-crowd
 				}
 				var lm= L.geoJson(plotlist[i], {
 					pointToLayer: function (feature, latlng) {
-						if (plotlist[i].properties.kind == "Spoorwegovergang") 
-							return L.marker(latlng, {icon: spoorIcon});
-						else if (plotlist[i].properties.kind == "Busstation") 
-							return L.marker(latlng, {icon: busIcon});
-						else if (plotlist[i].properties.kind == "Brandweerkazerne") 
-							return L.marker(latlng, {icon: brandIcon});
-						else if (plotlist[i].properties.kind == "Ziekenhuis") 
-							return L.marker(latlng, {icon: ziekenIcon});
-						else if (plotlist[i].properties.kind == "Tankstation") 
-							return L.marker(latlng, {icon: tankIcon});
-						else if (plotlist[i].properties.kind == "Treinstation") 
-							return L.marker(latlng, {icon: treinIcon});
-						else if (plotlist[i].properties.kind == "Basisschool") 
-							return L.marker(latlng, {icon: basisIcon});
-						else if (plotlist[i].properties.kind == "Politiebureau") 
-							return L.marker(latlng, {icon: politieIcon});
-						else if (plotlist[i].properties.kind == "Middelbare school") 
-							return L.marker(latlng, {icon: middelbareIcon});
-						else
-							geojsonMarkerOptions.fillColor= "#ffffff";
-						return L.circleMarker(latlng, geojsonMarkerOptions);
+						return createIcon(latlng, plotlist[i].properties.kind);
 					}
 				});
 				//if (!hasTouch)
@@ -408,12 +412,6 @@ https://github.com/tomtor/school-crowd
 				$("#noPW").modal();
 				return;
 			}
-			/*
-			if ($("#nameInput").val().length == 0) {
-				$("#noName").modal();
-				return;
-			}
-			*/
 			var gjf = {
 				"type": "Feature",
 				"geometry": {
@@ -421,39 +419,23 @@ https://github.com/tomtor/school-crowd
 					"coordinates": [ e.latlng.lng, e.latlng.lat ]
 				},
 				"properties" : {
-/*
-					"name" : clean($("#nameInput").val()),
-					"objlink": $("#linkInput").val().length ? $("#linkInput").val() : null,
-*/
 					"kind" : $("#selInput").val(),
 					"user" : $("#idInput").val()
 				}
 			};
 
 			map.closePopup();
+			if (lastMark)
+				map.removeLayer(lastMark);
+			lastMark = createIcon(e.latlng, gjf.properties.kind);
 			var msg= server + '/add/' + encodeURIComponent(JSON.stringify(gjf));
 			$.ajax({url: msg, success: function(result){
 				var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\">" +
-/*
-				"<tr class=\"smallrow\"><td>Geheime Sleutel:</td><td>" +
-				+ result + "</td></tr><tr><td>Omschrijving:</td><td><b>" + xss(gjf.properties.name) + "</td></tr>" +
-				(gjf.properties.objlink ?
-					("<tr><td>Link:</td><td><b><a href=\"" + decode(gjf.properties.objlink) + "\" target=\"_blank\">toon</a></b></td></tr>") : "") +
-*/
 				"<tr><td>Soort:</td><td><b>" +  xss(gjf.properties.kind) + "</b></td></tr></table>" +
 				"<button id=\"delButton\" onclick=\"delObject('"+result+"')\" type=\"button\" class=\"btn btn-warning btn-sm btn-block\">Verwijder</button>";
 				markers[result]= lastMark;
-				if (!hasTouch)
-					lastMark= lastMark.bindLabel(xss(gjf.properties.name));
 				lastMark.addTo(map).bindPopup(pu);
 				lastMark= null;
-/*
-				var row= $("#keyTable")[0].insertRow(1);
-				row.setAttribute("id",result);
-				row.innerHTML= "<td><button id=\"delButton2\" class=\"btn btn-warning btn-sm\" onclick=\"delObject('"+result+"')\" type=\"button\">Verwijder</button></td>";
-					// + "<td><b>" + xss(gjf.properties.name) + "</b></td><td>" + result + "</td>";
-					"<td><b>" + xss(gjf.properties.kind) + "</b></td>";
-*/
 		
 				if ($("#pwInput").val().length > 0) {
 					gjf.properties.crypt= a2hex(CryptoJS.AES.encrypt(result, $("#pwInput").val())+"");
@@ -475,17 +457,6 @@ https://github.com/tomtor/school-crowd
 		<label for="inputPassword" class="sr-only">Wachtwoord</label>
 		<input type="password" id="pwInput" class="form-control" placeholder="Wachtwoord" required>
 	</div>
-<!--
-	<div class="col-sm-8">
-		<div id="delTable" class="smallerrow">
-			<table id="keyTable" class="table table-condensed" >
-				<tr>
-					<th style="text-align:center; width:15%">Toegevoegd</th><th style="text-align:left;width:25%;">Omschrijving</th><th style="width:60%; text-align:left">Geheime Sleutel</th>
-				</tr>
-			</table>
-		</div>
-	</div>
--->
 </div>
 </div>
 </body>
