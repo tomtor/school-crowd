@@ -76,7 +76,10 @@ https://github.com/tomtor/school-crowd
 				<h4 class="modal-title">Let Op</h4>
 			</div>
 			<div class="modal-body">
+<!--
 				<div class="alert alert-info"><strong>Geen Wachtwoord of Gebruikersnaam ingevuld<strong></div>
+-->
+				<div class="alert alert-info"><strong>Geen gebruikersnaam ingevuld<strong></div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
@@ -169,7 +172,7 @@ https://github.com/tomtor/school-crowd
 			+"<img src='images/politiebureau-icon.png' width='24'>&nbsp;Politiebureau<br/>"
 			+"<img src='images/spoorovergang-icon.png' width='24'>&nbsp;Spoorwegovergang<br/>"
 			+"<img src='images/tankstation-icon.png' width='24'>&nbsp;Tankstation<br/>"
-			+"<img src='images/treinstation-icon.png' width='24'>&nbsp;Treinstation<br/>"
+			+"<img src='images/treinstation2-icon.png' width='24'>&nbsp;Treinstation<br/>"
 			+"<img src='images/ziekenhuis-icon.png' width='24'>&nbsp;Ziekenhuis<br/>"
 			+"</small>";
 	};
@@ -224,7 +227,7 @@ https://github.com/tomtor/school-crowd
 			politieIcon = new CrowdIcon({iconUrl: 'images/politiebureau-icon.png'}),
 			spoorIcon = new CrowdIcon({iconUrl: 'images/spoorovergang-icon.png'}),
 			tankIcon = new CrowdIcon({iconUrl: 'images/tankstation-icon.png'}),
-			treinIcon = new CrowdIcon({iconUrl: 'images/treinstation-icon.png'}),
+			treinIcon = new CrowdIcon({iconUrl: 'images/treinstation2-icon.png'}),
 			ziekenIcon = new CrowdIcon({iconUrl: 'images/ziekenhuis-icon.png'});
 
 	var popup = L.popup();
@@ -400,7 +403,8 @@ https://github.com/tomtor/school-crowd
 		lastMark = L.marker(e.latlng);
 		lastMark.addTo(map).bindPopup(pu).openPopup();
 		$("#addButton").click(function(event) {
-			if ($("#pwInput").val() == "" || $("#idInput").val == "") {
+			//if ($("#pwInput").val() == "" || $("#idInput").val == "") {
+			if ($("#idInput").val == "") {
 				$("#noPW").modal();
 				return;
 			}
