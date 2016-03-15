@@ -371,13 +371,14 @@ https://github.com/tomtor/school-crowd
 			if (lastMark)
 				map.removeLayer(lastMark);
 			lastMark = createIcon(e.latlng, gjf.properties.kind);
+			lastMark.addTo(map);
 			var msg= server + '/add/' + encodeURIComponent(JSON.stringify(gjf));
 			$.ajax({url: msg, success: function(result){
 				var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\">" +
 				"<tr><td>Soort:</td><td><b>" +  xss(gjf.properties.kind) + "</b></td></tr></table>" +
 				"<button id=\"delButton\" onclick=\"delObject('"+result+"')\" type=\"button\" class=\"btn btn-warning btn-sm btn-block\">Verwijder</button>";
 				markers[result]= lastMark;
-				lastMark.addTo(map).bindPopup(pu);
+				lastMark.bindPopup(pu);
 				lastMark= null;
 		
 				if ($("#pwInput").val().length > 0) {
