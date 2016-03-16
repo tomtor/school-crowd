@@ -68,6 +68,25 @@ https://github.com/tomtor/school-crowd
 	</div>
 </div>
 
+<div id="searchModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Zoek op straat, plaats of postcode:</h4>
+			</div>
+			<form>
+				<div class="modal-body">
+					<input id="idGeo" class="form-control" placeholder="grote markt groningen" required autofocus>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-default btn-block" onClick="toonGeo()" data-dismiss="modal">Toon</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
 <!--
 <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 -->
@@ -137,9 +156,27 @@ https://github.com/tomtor/school-crowd
 			+"<img src='images/tankstation-icon.png' width='24'>&nbsp;Tankstation<br/>"
 			+"<img src='images/treinstation2-icon.png' width='24'>&nbsp;Treinstation<br/>"
 			+"<img src='images/ziekenhuis-icon.png' width='24'>&nbsp;Ziekenhuis<br/>"
-			+"</small>";
+			+"</small>"
+			+"<br/><button id=\"zoekButton\" class=\"btn btn-default btn-block\" onclick=\"searchGeo()\" type=\"button\">Zoek plaats...</button>";
 	};
 	info.addTo(map);
+	L.DomEvent.disableClickPropagation($("#zoekButton")[0]);
+
+	function searchGeo() {
+		$("#searchModal").modal();
+	}
+
+	function toonGeo() {
+		$.ajax({url: "https://geodata.nationaalgeoregister.nl/geocoder/Geocoder?zoekterm=" +
+			encodeURIComponent($("#idGeo").val()), success: function(result) {
+				var pos= $(result).find("pos").first().text().split(" ");
+				//console.log(pos);
+				var latlng= RDM.projection.unproject(L.point(parseFloat(pos[0]), parseFloat(pos[1])));
+				//console.log(latlng);
+				//map.panTo(latlng);
+				map.setView(latlng, 9);
+			}});
+	}
 
 	L.control.locate({
 		position: 'topleft',  // set the location of the control
