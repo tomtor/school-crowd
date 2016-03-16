@@ -145,22 +145,25 @@ https://github.com/tomtor/school-crowd
 
 	// method that we will use to update the control based on feature properties passed
 	info.update = function (props) {
-	  this._div.innerHTML = '<b><small>Klik op de kaart<br/>om toe te voegen</small></b><br/>'
-			+"<small><br/>"
-			+"<img src='images/basisschool-icon.png' width='24'>&nbsp;Basisschool<br/>"
-			+"<img src='images/brandweerkazerne-icon.png' width='24'>&nbsp;Brandweerkazerne<br/>"
-			+"<img src='images/busstation-icon.png' width='24'>&nbsp;Busstation<br/>"
-			+"<img src='images/middelbare-school-icon.png' width='24'>&nbsp;Middelbare School<br/>"
-			+"<img src='images/politiebureau-icon.png' width='24'>&nbsp;Politiebureau<br/>"
-			+"<img src='images/spoorovergang-icon.png' width='24'>&nbsp;Spoorwegovergang<br/>"
-			+"<img src='images/tankstation-icon.png' width='24'>&nbsp;Tankstation<br/>"
-			+"<img src='images/treinstation2-icon.png' width='24'>&nbsp;Treinstation<br/>"
-			+"<img src='images/ziekenhuis-icon.png' width='24'>&nbsp;Ziekenhuis<br/>"
-			+"</small>"
-			+"<br/><button id=\"zoekButton\" class=\"btn btn-default btn-block\" onclick=\"searchGeo()\" type=\"button\">Zoek plaats...</button>";
+	  this._div.innerHTML =
+			  "<button id=\"zoekButton\" class=\"btn btn-default btn-block\" onclick=\"searchGeo()\" type=\"button\">Zoek plaats...</button>"
+			+ '<br/><b><small>Klik voegt toe:</small></b><br/><br/>'
+			+ "<small>"
+			+ "<img src='images/basisschool-icon.png' width='24'>&nbsp;Basisschool<br/>"
+			+ "<img src='images/brandweerkazerne-icon.png' width='24'>&nbsp;Brandweerkazerne<br/>"
+			+ "<img src='images/busstation-icon.png' width='24'>&nbsp;Busstation<br/>"
+			+ "<img src='images/middelbare-school-icon.png' width='24'>&nbsp;Middelbare School<br/>"
+			+ "<img src='images/politiebureau-icon.png' width='24'>&nbsp;Politiebureau<br/>"
+			+ "<img src='images/spoorovergang-icon.png' width='24'>&nbsp;Spoorwegovergang<br/>"
+			+ "<img src='images/tankstation-icon.png' width='24'>&nbsp;Tankstation<br/>"
+			+ "<img src='images/treinstation2-icon.png' width='24'>&nbsp;Treinstation<br/>"
+			+ "<img src='images/ziekenhuis-icon.png' width='24'>&nbsp;Ziekenhuis<br/>"
+			+ "</small>";
 	};
 	info.addTo(map);
 	L.DomEvent.disableClickPropagation($("#zoekButton")[0]);
+
+	$('#searchModal').on('shown.bs.modal', function () { $('#idGeo').focus(); })
 
 	function searchGeo() {
 		$("#searchModal").modal();
