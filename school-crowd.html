@@ -403,6 +403,7 @@ https://github.com/tomtor/school-crowd
 	}
 
 	lastMark= null;
+	lastLoc= null;
 
 	function onMapClick(e) {
 		var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\">" +
@@ -423,6 +424,7 @@ https://github.com/tomtor/school-crowd
 		if (lastMark)
 			map.removeLayer(lastMark);
 		lastMark = L.marker(e.latlng);
+		lastLoc = e.latlng;
 		lastMark.addTo(map).bindPopup(pu).openPopup();
 		$("#addButton").click(function(event) {
 			if ($("#idInput").val() == "") {
@@ -433,7 +435,7 @@ https://github.com/tomtor/school-crowd
 				"type": "Feature",
 				"geometry": {
 					"type": "Point",
-					"coordinates": [ e.latlng.lng, e.latlng.lat ]
+					"coordinates": [ lastLoc.lng, lastLoc.lat ]
 				},
 				"properties" : {
 					"kind" : $("#selInput").val(),
@@ -444,7 +446,7 @@ https://github.com/tomtor/school-crowd
 			map.closePopup();
 			if (lastMark)
 				map.removeLayer(lastMark);
-			lastMark = createIcon(e.latlng, gjf.properties.kind);
+			lastMark = createIcon(lastLoc, gjf.properties.kind);
 			lastMark.addTo(map);
 			var msg= server + '/add/' + encodeURIComponent(JSON.stringify(gjf));
 			$.ajax({url: msg, success: function(result){
