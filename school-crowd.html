@@ -209,8 +209,7 @@ https://github.com/tomtor/school-crowd
 			encodeURIComponent($("#idGeo").val()), success: function(result) {
 				var pos= $(result).find("pos").first().text().split(" ");
 				var latlng= RDM.projection.unproject(L.point(parseFloat(pos[0]), parseFloat(pos[1])));
-				//map.panTo(latlng);
-				map.setView(latlng, 8);
+				map.setView(latlng, $("#idGeo").val().indexOf(' ') >= 0 ? 12 : 8);
 				$("#idGeo").val("");
 			}});
 	}
