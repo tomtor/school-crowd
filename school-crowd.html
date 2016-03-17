@@ -179,7 +179,7 @@ https://github.com/tomtor/school-crowd
 			var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
 			container.style.backgroundColor = 'white';
 			container.onclick = searchGeo;
-			container.innerHTML = "<div style='height: 30px; width: 30px; display: table'><div style='display: table-cell; vertical-align: middle; text-align: center;'><i class=\"fa fa-globe fa-2x\"></i></div></div>";
+			container.innerHTML = "<div style='cursor: pointer; height: 30px; width: 30px; display: table'><div style='display: table-cell; vertical-align: middle; text-align: center;'><i class=\"fa fa-globe fa-2x\"></i></div></div>";
 			L.DomEvent.disableClickPropagation(container);
 			return container;
 		},
