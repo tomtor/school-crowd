@@ -193,6 +193,7 @@ https://github.com/tomtor/school-crowd
 		},
 		onAdd: function (map) {
 			var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+			container.title = "Zoek een plaats";
 			container.style.backgroundColor = 'white';
 			container.onclick = searchGeo;
 			container.innerHTML = "<div style='cursor: pointer; height: 30px; width: 30px; display: table'><div style='display: table-cell; vertical-align: middle; text-align: center;'><i class=\"fa fa-globe fa-2x\"></i></div></div>";
@@ -205,7 +206,7 @@ https://github.com/tomtor/school-crowd
 
 	var info = L.control();
 	info.onAdd = function (map) {
-	  this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+	  this._div = L.DomUtil.create('div', 'info');
 	  this.update();
 	  return this._div;
 	};
