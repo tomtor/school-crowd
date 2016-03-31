@@ -68,6 +68,23 @@ https://github.com/tomtor/school-crowd
 	</div>
 </div>
 
+<div id="moreZoom" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Let Op</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-warning"><strong>Je moet verder inzoomen voordat je kan toevoegen!<strong></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div id="noPW" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -84,7 +101,6 @@ https://github.com/tomtor/school-crowd
 		</div>
 	</div>
 </div>
-
 
 <div id="wrongPW" class="modal fade" role="dialog">
 	<div class="modal-dialog">
@@ -279,8 +295,6 @@ https://github.com/tomtor/school-crowd
 			treinIcon = new CrowdIcon({iconUrl: 'images/treinstation2-icon.png'}),
 			ziekenIcon = new CrowdIcon({iconUrl: 'images/ziekenhuis-icon.png'});
 
-	var popup = L.popup();
-
 	$.ajax({url: server+"/get/", success: function(result){ markersReceived(result) }});
 
 	function getDPI() {
@@ -419,6 +433,10 @@ https://github.com/tomtor/school-crowd
 	lastLoc= null;
 
 	function onMapClick(e) {
+    if (map.getZoom() < 11) {
+			$("#moreZoom").modal();
+			return;
+		}
 		var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\">" +
 				"<tr><td>Maak een keuze:</td></tr>" +
 			"<tr>" +
