@@ -138,9 +138,6 @@ https://github.com/tomtor/school-crowd
 	</div>
 </div>
 
-<!--
-<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
--->
 <script src="leaflet.js"></script>
 <script src="proj4-compressed.js"></script>
 <script src="L.Control.Locate.min.js" charset="utf-8"></script>
@@ -148,7 +145,6 @@ https://github.com/tomtor/school-crowd
 <script src="proj4leaflet.js"></script>
 <script src="aes.js"></script>
 <script>
-	//var serverBase = 'https://v7f.eu/pdok-demo-data';
 	var serverBase = '/pdok-demo-data';
 	var server = serverBase + '/0ff8d17a-dc80-11e5-b7b0-b827eb842aa1';
 
@@ -286,7 +282,7 @@ https://github.com/tomtor/school-crowd
 				iconAnchor: [getDPI()/6,getDPI()/6]
 			}
 	});
-  var basisIcon = new CrowdIcon({iconUrl: 'images/basisschool-icon.png'}),
+	var basisIcon = new CrowdIcon({iconUrl: 'images/basisschool-icon.png'}),
 			brandIcon = new CrowdIcon({iconUrl: 'images/brandweerkazerne-icon.png'}),
 			busIcon = new CrowdIcon({iconUrl: 'images/busstation-icon.png'}),
 			middelbareIcon = new CrowdIcon({iconUrl: 'images/middelbare-school-icon.png'}),
@@ -434,7 +430,7 @@ https://github.com/tomtor/school-crowd
 	lastLoc= null;
 
 	function onMapClick(e) {
-    if (map.getZoom() < 11) {
+		if (map.getZoom() < 11) {
 			$("#moreZoom").modal();
 			return;
 		}
