@@ -2,7 +2,7 @@
 <html lang="nl">
 <!--
 
-https://github.com/tomtor/school-crowd
+https://github.com/tomtor/paaltjes
 
 -->
 <head>
@@ -212,10 +212,10 @@ https://github.com/tomtor/school-crowd
 	  this._div.innerHTML =
 				'<b><small>Klik voegt toe:</small></b><br/><br/>'
 			+ "<small>"
-			+ "<img src='images/basisschool-icon.png' width='24'>&nbsp;Paaltje 1<br/>"
-			+ "<img src='images/brandweerkazerne-icon.png' width='24'>&nbsp;Paaltje 2<br/>"
-			+ "<img src='images/busstation-icon.png' width='24'>&nbsp;Paaltje 3<br/>"
-			+ "<img src='images/middelbare-school-icon.png' width='24'>&nbsp;Paaltje 4<br/>"
+			+ "<img src='images/vast-icon.png' width='24'>&nbsp;Vast Paaltje<br/>"
+			+ "<img src='images/overrijdbaar-icon.png' width='24'>&nbsp;Overrijdbaar Paaltje<br/>"
+			+ "<img src='images/handmatig-icon.png' width='24'>&nbsp;Handmatig Paaltje<br/>"
+			+ "<img src='images/automatisch-icon.png' width='24'>&nbsp;Automatisch Paaltje<br/>"
 			+ "</small>";
 	};
 	info.addTo(map);
@@ -277,10 +277,10 @@ https://github.com/tomtor/school-crowd
 				iconAnchor: [getDPI()/6,getDPI()/6]
 			}
 	});
-	var basisIcon = new CrowdIcon({iconUrl: 'images/basisschool-icon.png'}),
-			brandIcon = new CrowdIcon({iconUrl: 'images/brandweerkazerne-icon.png'}),
-			busIcon = new CrowdIcon({iconUrl: 'images/busstation-icon.png'}),
-			middelbareIcon = new CrowdIcon({iconUrl: 'images/middelbare-school-icon.png'});
+	var vastIcon = new CrowdIcon({iconUrl: 'images/vast-icon.png'}),
+			overrijdbaarIcon = new CrowdIcon({iconUrl: 'images/overrijdbaar-icon.png'}),
+			handmatigIcon = new CrowdIcon({iconUrl: 'images/handmatig-icon.png'}),
+			automatischIcon = new CrowdIcon({iconUrl: 'images/automatisch-icon.png'});
 
 	$.ajax({url: server+"/get/", success: function(result){ markersReceived(result) }});
 
@@ -357,14 +357,14 @@ https://github.com/tomtor/school-crowd
 			opacity: 1,
 			fillOpacity: 0.4
 		};
-		if (kind == "Spoorwegovergang") 
-			return L.marker(latlng, {icon: spoorIcon});
-		else if (kind == "Busstation") 
-			return L.marker(latlng, {icon: busIcon});
-		else if (kind == "Brandweerkazerne") 
-			return L.marker(latlng, {icon: brandIcon});
-		else if (kind == "Ziekenhuis") 
-			return L.marker(latlng, {icon: ziekenIcon});
+		if (kind == "Vast") 
+			return L.marker(latlng, {icon: vastIcon});
+		else if (kind == "Overrijdbaar") 
+			return L.marker(latlng, {icon: overrijdbaarIcon});
+		else if (kind == "Automatisch") 
+			return L.marker(latlng, {icon: automatischIcon});
+		else if (kind == "Handmatig") 
+			return L.marker(latlng, {icon: handmatigIcon});
 		else
 			geojsonMarkerOptions.fillColor= "#ffffff";
 		return L.circleMarker(latlng, geojsonMarkerOptions);
@@ -418,15 +418,10 @@ https://github.com/tomtor/school-crowd
 				"<tr><td>Maak een keuze:</td></tr>" +
 			"<tr>" +
 				"<td><select id=\"selInput\" style=\"width: 15em\" class=\"form-control\">" +
-				"<option value=\"Basisschool\">Basisschool</option>"+ 
-				"<option value=\"Brandweerkazerne\">Brandweerkazerne</option>"+ 
-				"<option value=\"Busstation\">Busstation</option>"+
-				"<option value=\"Middelbare school\">Middelbare school</option>"+ 
-				"<option value=\"Politiebureau\">Politiebureau</option>"+ 
-				"<option value=\"Spoorwegovergang\">Spoorwegovergang</option>"+
-				"<option value=\"Tankstation\">Tankstation</option>"+ 
-				"<option value=\"Treinstation\">Treinstation</option>"+ 
-				"<option value=\"Ziekenhuis\">Ziekenhuis</option>"+
+				"<option value=\"Vast\">Vast</option>"+ 
+				"<option value=\"Overrijdbaar\">Overrijdbaar</option>"+ 
+				"<option value=\"Handmatig\">Handmatig</option>"+
+				"<option value=\"Automatisch\">Automatisch</option>"+ 
 			"</select></td></tr></table><br/>" +
 			"<button id=\"addButton\" class=\"btn btn-success btn-sm btn-block\" type=\"button\">Toevoegen</button>";
 		if (lastMark)
