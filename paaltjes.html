@@ -376,6 +376,8 @@ https://github.com/tomtor/paaltjes
 			try {
 				pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\">" +
 					"<tr><td>Gebruiker:</td><td>" + xss(plotlist[i].properties.user) + "</td></tr>" +
+					(plotlist[i].properties.objlink ?
+						("<tr><td>Link:</td><td><b><a href=\"" + decode(plotlist[i].properties.objlink) + "\" target=\"_blank\">toon</a></b></td></tr>") : "") +
 					"<tr><td>Soort:</td><td><b>" + xss(plotlist[i].properties.kind) + "</td></tr></table>";
 				if (plotlist[i].properties.crypt) {
 					pu= pu + "<button id=\"delCryptButton\" class=\"btn btn-danger btn-sm btn-block\" onclick=\"delSecret('"
@@ -415,6 +417,7 @@ https://github.com/tomtor/paaltjes
 			return;
 		}
 		var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\">" +
+				"<tr><td>Link (bv foto):</td><td></tr><tr><td><input id=\"linkInput\" type=\"text\"/></td></tr>" +
 				"<tr><td>Maak een keuze:</td></tr>" +
 			"<tr>" +
 				"<td><select id=\"selInput\" style=\"width: 15em\" class=\"form-control\">" +
@@ -441,6 +444,7 @@ https://github.com/tomtor/paaltjes
 					"coordinates": [ lastLoc.lng, lastLoc.lat ]
 				},
 				"properties" : {
+					"objlink": $("#linkInput").val().length ? $("#linkInput").val() : null,
 					"kind" : $("#selInput").val(),
 					"user" : $("#idInput").val()
 				}
@@ -454,6 +458,8 @@ https://github.com/tomtor/paaltjes
 			var msg= server + '/add/' + encodeURIComponent(JSON.stringify(gjf));
 			$.ajax({url: msg, success: function(result){
 				var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\">" +
+				(gjf.properties.objlink ?
+					("<tr><td>Link:</td><td><b><a href=\"" + decode(gjf.properties.objlink) + "\" target=\"_blank\">toon</a></b></td></tr>") : "") +
 				"<tr><td>Soort:</td><td><b>" +  xss(gjf.properties.kind) + "</b></td></tr></table>" +
 				"<button id=\"delButton\" onclick=\"delObject('"+result+"')\" type=\"button\" class=\"btn btn-warning btn-sm btn-block\">Verwijder</button>";
 				markers[result]= lastMark;
