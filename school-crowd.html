@@ -221,6 +221,7 @@ https://github.com/tomtor/school-crowd
 			+ "<img src='images/tankstation-icon.png' width='24'>&nbsp;Tankstation<br/>"
 			+ "<img src='images/treinstation2-icon.png' width='24'>&nbsp;Treinstation<br/>"
 			+ "<img src='images/ziekenhuis-icon.png' width='24'>&nbsp;Ziekenhuis<br/>"
+			+ "<img src='images/Road-Cone-icon.png' width='24'>&nbsp;Paaltje<br/>"
 			+ "</small>";
 	};
 	info.addTo(map);
@@ -290,7 +291,8 @@ https://github.com/tomtor/school-crowd
 			spoorIcon = new CrowdIcon({iconUrl: 'images/spoorovergang-icon.png'}),
 			tankIcon = new CrowdIcon({iconUrl: 'images/tankstation-icon.png'}),
 			treinIcon = new CrowdIcon({iconUrl: 'images/treinstation2-icon.png'}),
-			ziekenIcon = new CrowdIcon({iconUrl: 'images/ziekenhuis-icon.png'});
+			ziekenIcon = new CrowdIcon({iconUrl: 'images/ziekenhuis-icon.png'}),
+			paaltjeIcon = new CrowdIcon({iconUrl: 'images/Road-Cone-icon.png'});
 
 	$.ajax({url: server+"/get/", success: function(result){ markersReceived(result) }});
 
@@ -375,6 +377,8 @@ https://github.com/tomtor/school-crowd
 			return L.marker(latlng, {icon: brandIcon});
 		else if (kind == "Ziekenhuis") 
 			return L.marker(latlng, {icon: ziekenIcon});
+		else if (kind == "Paaltje") 
+			return L.marker(latlng, {icon: paaltjeIcon});
 		else if (kind == "Tankstation") 
 			return L.marker(latlng, {icon: tankIcon});
 		else if (kind == "Treinstation") 
@@ -437,6 +441,7 @@ https://github.com/tomtor/school-crowd
 			return;
 		}
 		var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\">" +
+				"<tr><td>Link (bv foto):</td><td></tr><tr><td><input id=\"linkInput\" type=\"text\"/></td></tr>" +
 				"<tr><td>Maak een keuze:</td></tr>" +
 			"<tr>" +
 				"<td><select id=\"selInput\" style=\"width: 15em\" class=\"form-control\">" +
@@ -449,6 +454,7 @@ https://github.com/tomtor/school-crowd
 				"<option value=\"Tankstation\">Tankstation</option>"+ 
 				"<option value=\"Treinstation\">Treinstation</option>"+ 
 				"<option value=\"Ziekenhuis\">Ziekenhuis</option>"+
+				"<option value=\"Paaltje\">Paaltje</option>"+ 
 			"</select></td></tr></table><br/>" +
 			"<button id=\"addButton\" class=\"btn btn-success btn-sm btn-block\" type=\"button\">Toevoegen</button>";
 		if (lastMark)
