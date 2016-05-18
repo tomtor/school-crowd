@@ -399,7 +399,7 @@ https://github.com/tomtor/school-crowd
 		for (i= 0; i < plotlist.length; i++) {
 			try {
 				pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\">" +
-					"<tr><td>Gebruiker:</td><td>" + xss(plotlist[i].properties.user) + "</td></tr>" +
+					"<tr><td>Gebruiker:</td><td>" + xss(plotlist[i].properties.user) + " / "+ xss(plotlist[i].properties.uuid).substring(0,8) + "</td></tr>" +
 					(plotlist[i].properties.objlink ?
 						("<tr><td>Link:</td><td><b><a href=\"" + decode(plotlist[i].properties.objlink) + "\" target=\"_blank\">toon</a></b></td></tr>") : "") +
 					"<tr><td>Soort:</td><td><b>" + xss(plotlist[i].properties.kind) + "</td></tr></table>";
