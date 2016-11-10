@@ -46,7 +46,11 @@ https://github.com/tomtor/school-crowd
 	</div>
 
 <script>
-function setCookie() {
+function setCookie(name,value) {
+  document.cookie= name + "=" + encodeURIComponent(value) + ";";
+}
+
+function setCookies() {
   if ($("#idLocation").val().length == 0) {
     alert("Vul in waar je bent!");
     return;
@@ -67,13 +71,13 @@ function setCookie() {
     alert("Vul je e-Mail in!");
     return;
   }
-  document.cookie= "idVoornaam=" + $("#idVoornaam").val() + ";";
-  document.cookie= "idLocation=" + $("#idLocation").val() + ";";
-  document.cookie= "idLeeftijd=" + $("#idLeeftijd").val() + ";";
-  document.cookie= "idSchool=" + $("#idSchool").val() + ";";
-  document.cookie= "idMail=" + $("#idMail").val() + ";";
-  document.cookie= "idPassword=" + $("#idPassword").val() + ";";
-  document.cookie= "idSession=" + Math.random().toString() + ";";
+  setCookie("idVoornaam=", $("#idVoornaam").val());
+  setCookie("idLocation=", $("#idLocation").val());
+  setCookie("idLeeftijd=", $("#idLeeftijd").val());
+  setCookie("idSchool=", $("#idSchool").val());
+  setCookie("idMail=", $("#idMail").val());
+  setCookie("idPassword=", $("#idPassword").val());
+  setCookie("idSession=", Math.random().toString());
   window.location.href = 'school-crowd.html';
 }
 </script>
@@ -104,7 +108,7 @@ function setCookie() {
 		<input type="password" id="idPassword" class="form-control" placeholder="Wachtwoord (mag leeg blijven)">
     <p></p>
 
-    <a class="btn btn-primary btn-xl" onclick="setCookie()">START de App!</a>
+    <a class="btn btn-primary btn-xl" onclick="setCookies()">START de App!</a>
 	</div>
 </div>
 </div>
