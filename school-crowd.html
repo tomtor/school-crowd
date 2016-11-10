@@ -300,7 +300,11 @@ https://github.com/tomtor/school-crowd
 			ziekenIcon = new CrowdIcon({iconUrl: 'images/ziekenhuis-icon.png'}),
 			paaltjeIcon = new CrowdIcon({iconUrl: 'images/Road-Cone-icon.png'});
 
-	$.ajax({url: server+"/get/", success: function(result){ markersReceived(result) }});
+  filter= "";
+	if (getCookie("idSession").length > 0)
+		filter= "%" + getCookie("idSession") + "%";
+	$.ajax({url: server+"/get/" + filter,
+		success: function(result){ markersReceived(result) }});
 
   function getCookie(cname) {
     var name = cname + "=";
@@ -501,7 +505,8 @@ https://github.com/tomtor/school-crowd
 					"location" : idLocation,
 				  "eMail" : idMail,
 				  "leeftijd" : idLeeftijd,
-				  "school" : idSchool
+				  "school" : idSchool,
+					"session" : getCookie("idSession")
 				}
 			};
 
@@ -549,7 +554,7 @@ https://github.com/tomtor/school-crowd
 
 		if (getCookie("idSession").length > 0) {
 		  $("#idFinished").html(
-			  "<p><a class='btn btn-primary btn-xl' style='color:white;' onclick='finished()'>KLAAR!</a></p>");
+			  "<p><a class='btn btn-primary btn-xl' style='color:white;' onclick='finished()'>Ik ben KLAAR!</a></p>");
 		}
   }
 
