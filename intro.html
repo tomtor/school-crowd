@@ -67,13 +67,12 @@ function setCookie() {
     alert("Vul je e-Mail in!");
     return;
   }
-  document.cookie=
-    "idVoornaam=" + $("#idVoornaam").val() + ";" +
-    "idLocation=" + $("#idLocation").val() + ";" +
-    "idLeeftijd=" + $("#idLeeftijd").val() + ";" +
-    "idSchool=" + $("#idSchool").val() + ";" +
-    "idMail=" + $("#idMail").val() + ";" +
-    "idPassword=" + $("#idPassword").val() + ";"
+  document.cookie= "idVoornaam=" + $("#idVoornaam").val() + ";";
+  document.cookie= "idLocation=" + $("#idLocation").val() + ";";
+  document.cookie= "idLeeftijd=" + $("#idLeeftijd").val() + ";";
+  document.cookie= "idSchool=" + $("#idSchool").val() + ";";
+  document.cookie= "idMail=" + $("#idMail").val() + ";";
+  document.cookie= "idPassword=" + $("#idPassword").val() + ";";
   window.location.href = 'school-crowd.html';
 }
 </script>
