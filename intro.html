@@ -73,6 +73,7 @@ function setCookie() {
   document.cookie= "idSchool=" + $("#idSchool").val() + ";";
   document.cookie= "idMail=" + $("#idMail").val() + ";";
   document.cookie= "idPassword=" + $("#idPassword").val() + ";";
+  document.cookie= "idSession=" + Math.random().toString() + ";";
   window.location.href = 'school-crowd.html';
 }
 </script>

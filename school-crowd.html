@@ -209,7 +209,7 @@ https://github.com/tomtor/school-crowd
 
 	// method that we will use to update the control based on feature properties passed
 	info.update = function (props) {
-	  this._div.innerHTML =
+	  info =
 				'<b><small>Klik voegt toe:</small></b><br/><br/>'
 			+ "<small>"
 			+ "<img src='images/basisschool-icon.png' width='24'>&nbsp;Basisschool<br/>"
@@ -223,10 +223,16 @@ https://github.com/tomtor/school-crowd
 			+ "<img src='images/ziekenhuis-icon.png' width='24'>&nbsp;Ziekenhuis<br/>"
 			+ "<img src='images/Road-Cone-icon.png' width='24'>&nbsp;Paaltje<br/>"
 			+ "</small>";
+		this._div.innerHTML = info;
 	};
 	info.addTo(map);
 
 	$('#searchModal').on('shown.bs.modal', function () { $('#idGeo').focus(); })
+
+  function finished() {
+    document.cookie= "idSession = ;";
+    window.location.href = 'school-crowd.html';
+  }
 
 	function searchGeo() {
 		$("#searchModal").modal();
@@ -540,10 +546,18 @@ https://github.com/tomtor/school-crowd
     if (idPassword.length > 0) {
       $("#pwInput").val(idPassword);
     }
+
+		if (getCookie("idSession").length > 0) {
+		  $("#idFinished").html(
+			  "<p><a class='btn btn-primary btn-xl' style='color:white;' onclick='finished()'>KLAAR!</a></p>");
+		}
   }
 
 </script>
 <p></p>
+<div class="row">
+  <div id="idFinished" class="col-sm-4"> </div>
+</div>
 <div class="row">
 	<div class="col-sm-4">
 		<label for="inputEmail" class="sr-only">Gebruiker</label>
