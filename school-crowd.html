@@ -209,8 +209,8 @@ https://github.com/tomtor/school-crowd
 
 	// method that we will use to update the control based on feature properties passed
 	info.update = function (props) {
-	  info =
-				'<b><small>Klik voegt toe:</small></b><br/><br/>'
+		info =
+			'<b><small>Klik voegt toe:</small></b><br/><br/>'
 			+ "<small>"
 			+ "<img src='images/basisschool-icon.png' width='24'>&nbsp;Basisschool<br/>"
 			+ "<img src='images/brandweerkazerne-icon.png' width='24'>&nbsp;Brandweerkazerne<br/>"
@@ -229,10 +229,10 @@ https://github.com/tomtor/school-crowd
 
 	$('#searchModal').on('shown.bs.modal', function () { $('#idGeo').focus(); })
 
-  function finished() {
-    document.cookie= "idSession = ;";
-    window.location.href = 'school-crowd.html';
-  }
+	function finished() {
+		document.cookie= "idSession = ;";
+		window.location.href = 'school-crowd.html';
+	}
 
 	function searchGeo() {
 		$("#searchModal").modal();
@@ -300,26 +300,26 @@ https://github.com/tomtor/school-crowd
 			ziekenIcon = new CrowdIcon({iconUrl: 'images/ziekenhuis-icon.png'}),
 			paaltjeIcon = new CrowdIcon({iconUrl: 'images/Road-Cone-icon.png'});
 
-  filter= "";
+	filter= "";
 	if (getCookie("idSession").length > 0)
 		filter= "%" + getCookie("idSession") + "%";
 	$.ajax({url: server+"/get/" + filter,
 		success: function(result){ markersReceived(result) }});
 
-  function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length,c.length);
-        }
-    }
-    return "";
-  }
+	function getCookie(cname) {
+		var name = cname + "=";
+		var ca = document.cookie.split(';');
+		for(var i = 0; i <ca.length; i++) {
+			var c = ca[i];
+			while (c.charAt(0)==' ') {
+				c = c.substring(1);
+			}
+			if (c.indexOf(name) == 0) {
+				return c.substring(name.length,c.length);
+			}
+		}
+		return "";
+	}
 
 	function getDPI() {
 		return document.getElementById("dpi").offsetHeight;
@@ -468,7 +468,7 @@ https://github.com/tomtor/school-crowd
 		var pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\">" +
 				"<tr><td>Link (bv foto):</td><td></tr><tr><td><input id=\"linkInput\" type=\"text\"/></td></tr>" +
 				"<tr><td>Maak een keuze:</td></tr>" +
-			"<tr>" +
+				"<tr>" +
 				"<td><select id=\"selInput\" style=\"width: 15em\" class=\"form-control\">" +
 				"<option value=\"Basisschool\">Basisschool</option>"+ 
 				"<option value=\"Brandweerkazerne\">Brandweerkazerne</option>"+ 
@@ -503,9 +503,9 @@ https://github.com/tomtor/school-crowd
 					"objlink": $("#linkInput").val().length ? $("#linkInput").val() : null,
 					"user" : $("#idInput").val(),
 					"location" : idLocation,
-				  "eMail" : idMail,
-				  "leeftijd" : idLeeftijd,
-				  "school" : idSchool,
+					"eMail" : idMail,
+					"leeftijd" : idLeeftijd,
+					"school" : idSchool,
 					"session" : getCookie("idSession")
 				}
 			};
@@ -537,31 +537,31 @@ https://github.com/tomtor/school-crowd
 
 	map.on('click', onMapClick);
 
-  function getCookies() {
-    idVoornaam= getCookie("idVoornaam");
-    idLocation= getCookie("idLocation");
-    idLeeftijd= getCookie("idLeeftijd");
-    idSchool= getCookie("idSchool");
-    idMail= getCookie("idMail");
-    idPassword= getCookie("idPassword");
+	function getCookies() {
+		idVoornaam= getCookie("idVoornaam");
+		idLocation= getCookie("idLocation");
+		idLeeftijd= getCookie("idLeeftijd");
+		idSchool= getCookie("idSchool");
+		idMail= getCookie("idMail");
+		idPassword= getCookie("idPassword");
 
-    if (idVoornaam.length > 0) {
-      $("#idInput").val(idVoornaam);
-    }
-    if (idPassword.length > 0) {
-      $("#pwInput").val(idPassword);
-    }
+		if (idVoornaam.length > 0) {
+			$("#idInput").val(idVoornaam);
+		}
+		if (idPassword.length > 0) {
+			$("#pwInput").val(idPassword);
+		}
 
 		if (getCookie("idSession").length > 0) {
-		  $("#idFinished").html(
-			  "<p><a class='btn btn-primary btn-xl' style='color:white;' onclick='finished()'>Ik ben KLAAR!</a></p>");
+			$("#idFinished").html(
+				"<p><a class='btn btn-primary btn-xl' style='color:white;' onclick='finished()'>Ik ben KLAAR!</a></p>");
 		}
   }
 
 </script>
 <p></p>
 <div class="row">
-  <div id="idFinished" class="col-sm-4"> </div>
+	<div id="idFinished" class="col-sm-4"> </div>
 </div>
 <div class="row">
 	<div class="col-sm-4">
