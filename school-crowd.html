@@ -39,7 +39,7 @@ https://github.com/tomtor/school-crowd
 <link rel="stylesheet" href="L.Control.Locate.min.css" />
 <link rel="stylesheet" href="school-crowd.css" />
 </head>
-<body>
+<body onload="getCookies()">
 <div class="container">
 	<div id="heading" class="jumbotron">
 		<table width="100%">
@@ -296,6 +296,21 @@ https://github.com/tomtor/school-crowd
 
 	$.ajax({url: server+"/get/", success: function(result){ markersReceived(result) }});
 
+  function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length,c.length);
+        }
+    }
+    return "";
+  }
+
 	function getDPI() {
 		return document.getElementById("dpi").offsetHeight;
 	}
@@ -506,6 +521,22 @@ https://github.com/tomtor/school-crowd
 	}
 
 	map.on('click', onMapClick);
+
+  function getCookies() {
+    idVoornaam= getCookie("idVoornaam");
+    idLocation= getCookie("idLocation");
+    idLeeftijd= getCookie("idLeeftijd");
+    idSchool= getCookie("idSchool");
+    idMail= getCookie("idMail");
+    idPassword= getCookie("idPassword");
+
+    if (idVoornaam.length > 0) {
+      $("#idInput").val(idVoornaam);
+    }
+    if (idPassword.length > 0) {
+      $("#pwInput").val(idPassword);
+    }
+  }
 
 </script>
 <p></p>

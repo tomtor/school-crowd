@@ -46,14 +46,42 @@ https://github.com/tomtor/school-crowd
 	</div>
 
 <script>
-
+function setCookie() {
+  if ($("#idLocation").val().length == 0) {
+    alert("Vul in waar je bent!");
+    return;
+  }
+  if ($("#idVoornaam").val().length == 0) {
+    alert("Vul je voornaam in!");
+    return;
+  }
+  if ($("#idLeeftijd").val().length == 0) {
+    alert("Vul in hoe oud je bent!");
+    return;
+  }
+  if ($("#idSchool").val().length == 0) {
+    alert("Vul de naam van je school in!");
+    return;
+  }
+  if ($("#idMail").val().length == 0) {
+    alert("Vul je e-Mail in!");
+    return;
+  }
+  document.cookie=
+    "idVoornaam=" + $("#idVoornaam").val() + ";" +
+    "idLocation=" + $("#idLocation").val() + ";" +
+    "idLeeftijd=" + $("#idLeeftijd").val() + ";" +
+    "idSchool=" + $("#idSchool").val() + ";" +
+    "idMail=" + $("#idMail").val() + ";" +
+    "idPassword=" + $("#idPassword").val() + ";"
+  window.location.href = 'school-crowd.html';
+}
 </script>
+
 <p></p>
 <div class="row">
 	<div class="col-sm-4" style="color:white;">
-		<p>Ben je op school of thuis?</p>
-    <input type="radio" name="idLocation" value="School" checked> School<br/>
-    <input type="radio" name="idLocation" value="Thuis"> Thuis<br/>
+		<input type="text" id="idLocation" class="form-control" placeholder="Ben je op school / thuis / ergens anders?" required autofocus>
     <p></p>
 
 		<label class="sr-only">Voornaam</label>
@@ -76,7 +104,7 @@ https://github.com/tomtor/school-crowd
 		<input type="password" id="idPassword" class="form-control" placeholder="Wachtwoord (mag leeg blijven)">
     <p></p>
 
-    <a href="school-crowd.html" class="btn btn-primary btn-xl">START de App!</a>
+    <a class="btn btn-primary btn-xl" onclick="setCookie()">START de App!</a>
 	</div>
 </div>
 </div>
