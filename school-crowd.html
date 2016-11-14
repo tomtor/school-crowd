@@ -31,11 +31,17 @@ https://github.com/tomtor/school-crowd
 <meta name="theme-color" content="#ffffff">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<!--
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+-->
+<link rel="stylesheet" href="bootstrap/bootstrap.min.css">
+<script src="bootstrap/bootstrap.min.js"></script>
+<link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+
 <link rel="stylesheet" href="leaflet.css" />
 <link rel="stylesheet" href="leaflet.label.css" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="L.Control.Locate.min.css" />
 <link rel="stylesheet" href="school-crowd.css" />
 </head>
@@ -160,14 +166,14 @@ https://github.com/tomtor/school-crowd
 		resolutions: res
 	});
 
-	var achtergrondkaart = L.tileLayer('http://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{y}.png', {
+	var achtergrondkaart = L.tileLayer('https://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{y}.png', {
 		tms: true,
 		minZoom: 2,
 		maxZoom: 13,
 		attribution: '<a href="https://github.com/tomtor/PDOK-demo-app">DemoMap</a> Map data &copy; <a href="http://pdok.nl">PDOK</a>',
 		id: 'brtachtergrondkaart'
 	});
-	var luchtfoto = L.tileLayer('http://geodata1.nationaalgeoregister.nl/luchtfoto/tms/1.0.0/luchtfoto_png/EPSG28992/{z}/{x}/{y}.png', {
+	var luchtfoto = L.tileLayer('https://geodata1.nationaalgeoregister.nl/luchtfoto/tms/1.0.0/luchtfoto_png/EPSG28992/{z}/{x}/{y}.png', {
 		tms: true,
 		minZoom: 2,
 		maxZoom: 13,
