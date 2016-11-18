@@ -303,7 +303,7 @@ https://github.com/tomtor/school-crowd
 
 	filter= "";
 	if (getCookie("idSession").length > 0)
-		filter= "%" + getCookie("idSession") + "%";
+		filter= '%"eMail":"' + getCookie("idMail") + '"%';
 	$.ajax({url: server+"/get/" + filter,
 		success: function(result){ markersReceived(result) }});
 
