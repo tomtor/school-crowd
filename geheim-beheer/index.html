@@ -1,0 +1,79 @@
+<html lang="nl">
+
+<head>
+<script src="secret.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="sorttable.js"></script>
+<style>
+tr.even td {
+	  background-color: #CC9999;
+		    color: black;
+}
+tr.odd td {
+	  background-color: #9999CC;
+		    color: black;
+}
+</style>
+</head>
+<body onload="fetchData();">
+  <p>
+  <button onclick="refresh()" type="button">Refresh</button>
+  (Click on a table header to sort)
+  </p>
+	<table id="json2" class="sortable">
+		<thead>
+      <th>Actie</th>
+      <th>ID</th>
+      <th>e-Mail</th>
+      <th>IP-address</th>
+      <th>Date/Time</th>
+      <th>Data</th>
+      <th>Actie</th>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+
+	<script>
+var serverBase = 'https://v7f.eu/pdok-demo-data';
+var server = serverBase + secret;
+function delObject(key) {
+	console.log(key);
+	$.ajax({url: server+"/delete/"+key});
+}
+
+function refresh() {
+  $("#json2 tbody").html(document.createElement('tbody'));
+	fetchData();
+}
+
+function fetchData() {
+	$.ajax({url: serverBase+"/dump/school-crowd-geheim", success: function(data){
+		var tbl_body = "";
+		var odd_even = false;
+		$.each(data, function() {
+			var del_but = "<td><button onclick=\"delObject('"+this[1]+"')\" type=\"button\">Verwijder</button></td>";
+			var tbl_row = del_but;
+			this[0]= this[0].substring(0,8);
+			this[1]= "";
+			try {
+			  js= JSON.parse(this[4]);
+			  js.properties.crypt= "???";
+			  jsn= "["+js.geometry.coordinates + "]," + js.properties.kind + "," + js.properties.user;
+			  this[4]= jsn;
+        this[1]= js.properties.eMail;
+			  //this[4]= JSON.stringify(js);
+			}
+			catch(err) { }
+			$.each(this, function(k , v) {
+				tbl_row += "<td>"+v+"</td>";
+			})
+			tbl_row += del_but;
+			tbl_body += "<tr class=\""+( odd_even ? "odd" : "even")+"\">"+tbl_row+"</tr>";
+			odd_even = !odd_even;               
+		})
+		$("#json2 tbody").html(tbl_body)
+	}});
+}
+	</script>
+</body>
