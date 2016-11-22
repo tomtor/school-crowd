@@ -127,9 +127,11 @@ function fill()
 	filter= '%"eMail":"' + $("#idMail").val() + '"%';
 	$.ajax({url: server+"/get/" + filter,
 		success: function(result){ 
+			if (result.length > 0) {
 				$("#idVoornaam").val(result[0].properties.user);
 				$("#idLeeftijd").val(result[0].properties.leeftijd);
 				$("#idSchool").val(result[0].properties.school);
+			}
 		}});
 }
 </script>
