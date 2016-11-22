@@ -118,12 +118,30 @@ function setCookies() {
 	setCookie("idSession", Math.random().toString());
 	window.location.href = 'school-crowd.html';
 }
+
+var serverBase = '/pdok-demo-data';
+var server = serverBase + '/0ff8d17a-dc80-11e5-b7b0-b827eb842aa1';
+
+function fill()
+{
+	filter= '%"eMail":"' + $("#idMail").val() + '"%';
+	$.ajax({url: server+"/get/" + filter,
+		success: function(result){ 
+				$("#idVoornaam").val(result[0].properties.user);
+				$("#idLeeftijd").val(result[0].properties.leeftijd);
+				$("#idSchool").val(result[0].properties.school);
+		}});
+}
 </script>
 
 <p></p>
 <div class="row">
 	<div class="col-sm-4" style="color:white;">
 		<input type="text" id="idLocation" class="form-control" placeholder="Ben je op school / thuis / ergens anders?" required autofocus>
+		<p></p>
+
+		<label for="inputEmail" class="sr-only">e-Mail</label>
+		<input type="email" id="idMail" onChange="fill()" class="form-control" placeholder="Je e-Mail">
 		<p></p>
 
 		<label class="sr-only">Voornaam</label>
@@ -136,10 +154,6 @@ function setCookies() {
 
 		<label class="sr-only">School</label>
 		<input type="text" id="idSchool" class="form-control" placeholder="Je school">
-		<p></p>
-
-		<label for="inputEmail" class="sr-only">e-Mail</label>
-		<input type="email" id="idMail" class="form-control" placeholder="Je e-Mail">
 		<p></p>
 
 		<label for="inputPassword" class="sr-only">Wachtwoord</label>
