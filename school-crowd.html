@@ -372,7 +372,8 @@ https://github.com/tomtor/school-crowd
 	markers = {};
 
 	function delSecret(crypt) {
-		var pw= $("#pwInput").val();
+		//var pw= $("#pwInput").val();
+		var pw= idPassword;
 		if (pw.length > 0) {
 			var privKey= CryptoJS.AES.decrypt(hex2a(crypt), pw)+"";
 			privKey= hex2a(privKey);
@@ -489,10 +490,10 @@ https://github.com/tomtor/school-crowd
 		lastLoc = e.latlng;
 		lastMark.addTo(map).bindPopup(pu).openPopup();
 		$("#addButton").click(function(event) {
-			if ($("#idInput").val() == "") {
-				$("#noUser").modal();
-				return;
-			}
+			//if ($("#idInput").val() == "") {
+				//$("#noUser").modal();
+				//return;
+			//}
 			var gjf = {
 				"type": "Feature",
 				"geometry": {
@@ -502,7 +503,8 @@ https://github.com/tomtor/school-crowd
 				"properties" : {
 					"kind" : $("#selInput").val(),
 					"objlink": $("#linkInput").val().length ? $("#linkInput").val() : null,
-					"user" : $("#idInput").val(),
+					//"user" : $("#idInput").val(),
+					"user" : idVoornaam,
 					"location" : idLocation,
 					"eMail" : idMail,
 					"leeftijd" : idLeeftijd,
@@ -527,8 +529,10 @@ https://github.com/tomtor/school-crowd
 				lastMark.bindPopup(pu);
 				lastMark= null;
 		
-				if ($("#pwInput").val().length > 0) {
-					gjf.properties.crypt= a2hex(CryptoJS.AES.encrypt(result, $("#pwInput").val())+"");
+				//if ($("#pwInput").val().length > 0) {
+				if (idPassword.length > 0) {
+					//gjf.properties.crypt= a2hex(CryptoJS.AES.encrypt(result, $("#pwInput").val())+"");
+					gjf.properties.crypt= a2hex(CryptoJS.AES.encrypt(result, idPassword)+"");
 					var msg= server + '/update/' + result +'/' + encodeURIComponent(JSON.stringify(gjf));
 					$.ajax({url: msg, success: function(result){} });
 				}
@@ -546,12 +550,12 @@ https://github.com/tomtor/school-crowd
 		idMail= getCookie("idMail");
 		idPassword= getCookie("idPassword");
 
-		if (idVoornaam.length > 0) {
-			$("#idInput").val(idVoornaam);
-		}
-		if (idPassword.length > 0) {
-			$("#pwInput").val(idPassword);
-		}
+		//if (idVoornaam.length > 0) {
+			//$("#idInput").val(idVoornaam);
+		//}
+		//if (idPassword.length > 0) {
+			//$("#pwInput").val(idPassword);
+		//}
 
 		if (getCookie("idSession").length > 0) {
 			$("#idFinished").html(
