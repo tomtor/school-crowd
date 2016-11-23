@@ -37,6 +37,94 @@ https://github.com/tomtor/school-crowd
 </head>
 <body onload="copyCookies()">
 <div class="container">
+
+	<div id="noLokatie" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Let Op</h4>
+				</div>
+				<div class="modal-body">
+					<div class="alert alert-warning"><strong>Vul in waar je bent!<strong></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="noVoornaam" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Let Op</h4>
+				</div>
+				<div class="modal-body">
+					<div class="alert alert-warning"><strong>Vul je voornaam in!<strong></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="noEMail" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Let Op</h4>
+				</div>
+				<div class="modal-body">
+					<div class="alert alert-warning"><strong>Vul je e-Mail in!<strong></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="noSchool" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Let Op</h4>
+				</div>
+				<div class="modal-body">
+					<div class="alert alert-warning"><strong>Vul de naam van je school in!<strong></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="noLeeftijd" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Let Op</h4>
+				</div>
+				<div class="modal-body">
+					<div class="alert alert-warning"><strong>Vul in hoe oud je bent!<strong></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 	<div id="heading" class="jumbotron">
 		<table width="100%">
 			<tr>
@@ -81,7 +169,7 @@ function clrCookies() {
 
 function copyCookies() {
 	$("#idVoornaam").val(getCookie("idVoornaam"));
-	$("#idLocation").val(getCookie("idLocation"));
+	//$("#idLocation").val(getCookie("idLocation"));
 	$("#idLeeftijd").val(getCookie("idLeeftijd"));
 	$("#idSchool").val(getCookie("idSchool"));
 	$("#idMail").val(getCookie("idMail"));
@@ -90,25 +178,26 @@ function copyCookies() {
 
 function setCookies() {
 	if ($("#idLocation").val().length == 0) {
-		alert("Vul in waar je bent!");
-		return;
-	}
-	if ($("#idVoornaam").val().length == 0) {
-		alert("Vul je voornaam in!");
-		return;
-	}
-	if ($("#idLeeftijd").val().length == 0) {
-		alert("Vul in hoe oud je bent!");
-		return;
-	}
-	if ($("#idSchool").val().length == 0) {
-		alert("Vul de naam van je school in!");
+		$("#noLokatie").modal();
 		return;
 	}
 	if ($("#idMail").val().length == 0) {
-		alert("Vul je e-Mail in!");
+		$("#noEMail").modal();
 		return;
 	}
+	if ($("#idVoornaam").val().length == 0) {
+		$("#noVoornaam").modal();
+		return;
+	}
+	if ($("#idLeeftijd").val().length == 0) {
+		$("#noLeeftijd").modal();
+		return;
+	}
+	if ($("#idSchool").val().length == 0) {
+		$("#noSchool").modal();
+		return;
+	}
+
 	setCookie("idVoornaam", $("#idVoornaam").val());
 	setCookie("idLocation", $("#idLocation").val());
 	setCookie("idLeeftijd", $("#idLeeftijd").val());
