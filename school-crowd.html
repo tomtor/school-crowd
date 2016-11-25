@@ -477,6 +477,11 @@ https://github.com/tomtor/school-crowd
 				//$("#noUser").modal();
 				//return;
 			//}
+			// unknown user, drop data:
+			if (idVoornaam.length == 0) {
+				map.closePopup();
+				return;
+			}
 			var gjf = {
 				"type": "Feature",
 				"geometry": {
