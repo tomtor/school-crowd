@@ -131,6 +131,7 @@ https://github.com/tomtor/school-crowd
 <script>
 	var serverBase = '/pdok-demo-data';
 	var server = serverBase + '/0ff8d17a-dc80-11e5-b7b0-b827eb842aa1';
+	var serverVote = serverBase + '/8c959390-d650-11e6-82ac-0016cba2c19f';
 
 	var hasTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
 
@@ -404,15 +405,33 @@ https://github.com/tomtor/school-crowd
 		return L.circleMarker(latlng, geojsonMarkerOptions);
 	}
 
+  function addVote(index, val) {
+		var vote= {
+					"object": plotlist[index].properties.uuid,
+					"vote": val,
+					"user" : idVoornaam,
+					"location" : idLocation,
+					"eMail" : idMail,
+					"leeftijd" : idLeeftijd,
+					"school" : idSchool,
+					"session" : getCookie("idSession")
+		};
+		var msg= serverVote + '/add/' + encodeURIComponent(JSON.stringify(vote));
+		$.ajax({url: msg, success: function(result){ }});
+	}
+
 	function markersReceived(result) {
-		var plotlist= result;
+		plotlist= result;
 		for (i= 0; i < plotlist.length; i++) {
 			try {
 				pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\">" +
 					"<tr><td>Gebruiker:</td><td>" + xss(plotlist[i].properties.user) + " / "+ xss(plotlist[i].properties.uuid).substring(0,8) + "</td></tr>" +
 					(plotlist[i].properties.objlink ?
 						("<tr><td>Link:</td><td><b><a href=\"" + decode(plotlist[i].properties.objlink) + "\" target=\"_blank\">toon</a></b></td></tr>") : "") +
-					"<tr><td>Soort:</td><td><b>" + xss(plotlist[i].properties.kind) + "</td></tr></table>";
+					"<tr><td>Soort:</td><td><b>" + xss(plotlist[i].properties.kind) + "</td></tr>" +
+					"<tr><td><button onclick=\"addVote("+i+",1);\" type=\"button\"><img src=\"images/thumbs_up.png\"/></button></td>" +
+					"<td><button onclick=\"addVote("+i+",-1);\" type=\"button\"><img src=\"images/thumbs_down.png\"/></button></td>" +
+					"</tr></table>";
 				if (plotlist[i].properties.crypt) {
 					pu= pu + "<button id=\"delCryptButton\" class=\"btn btn-danger btn-sm btn-block\" onclick=\"delSecret('"
 						+xss(plotlist[i].properties.crypt)+"');\" type=\"button\">Verwijder</button>";
