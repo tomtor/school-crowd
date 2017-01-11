@@ -234,6 +234,8 @@ https://github.com/tomtor/school-crowd
 	}
 
 	function getBAG(x, y) {
+		identificatie= "GEEN";
+		gebruiksdoel= "GEEN";
 		$.ajax({
 			url: "https://geodata.nationaalgeoregister.nl/bag/wms?request=GetFeatureInfo&service=WMS&version=1.1.1&layers=pand&query_layers=pand&styles=&srs=EPSG:4326&x=0&y=0&width=1&height=1&info_format=application/json" +
 				"&bbox=" + x + "," + y + "," + (x+0.000001) + "," + (y+0.000001),
@@ -242,8 +244,6 @@ https://github.com/tomtor/school-crowd
 					identificatie= result.features[0].properties.identificatie;
 					gebruiksdoel= result.features[0].properties.gebruiksdoel;
 				} catch(err) {
-					identificatie= "GEEN";
-					gebruiksdoel= "GEEN";
 				}
 			}});
 	}
