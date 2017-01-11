@@ -233,6 +233,21 @@ https://github.com/tomtor/school-crowd
 			}});
 	}
 
+	function getBAG(x, y) {
+		$.ajax({
+			url: "https://geodata.nationaalgeoregister.nl/bag/wms?request=GetFeatureInfo&service=WMS&version=1.1.1&layers=pand&query_layers=pand&styles=&srs=EPSG:4326&x=0&y=0&width=1&height=1&info_format=application/json" +
+				"&bbox=" + x + "," + y + "," + (x+0.000001) + "," + (y+0.000001),
+			success: function(result) {
+				try {
+					identificatie= result.features[0].properties.identificatie;
+					gebruiksdoel= result.features[0].properties.gebruiksdoel;
+				} catch(err) {
+					identificatie= "GEEN";
+					gebruiksdoel= "GEEN";
+				}
+			}});
+	}
+
 	L.control.locate({
 		position: 'topleft',  // set the location of the control
 		layer: undefined,  // use your own layer for the location marker, creates a new layer by default
@@ -426,7 +441,8 @@ https://github.com/tomtor/school-crowd
 		for (i= 0; i < plotlist.length; i++) {
 			try {
 				pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\">" +
-					"<tr><td>Gebruiker:</td><td>" + xss(plotlist[i].properties.user) + " / "+ xss(plotlist[i].properties.uuid).substring(0,8) + "</td></tr>" +
+					// "<tr><td>Gebruiker:</td><td>" + xss(plotlist[i].properties.user) + " / "+ xss(plotlist[i].properties.uuid).substring(0,8) + "</td></tr>" +
+					"<tr><td>Object:</td><td>" + xss(plotlist[i].properties.uuid).substring(0,8) + "</td></tr>" +
 					(plotlist[i].properties.objlink ?
 						("<tr><td>Link:</td><td><b><a href=\"" + decode(plotlist[i].properties.objlink) + "\" target=\"_blank\">toon</a></b></td></tr>") : "") +
 					"<tr><td>Soort:</td><td><b>" + xss(plotlist[i].properties.kind) + "</td></tr>" +
@@ -465,6 +481,33 @@ https://github.com/tomtor/school-crowd
 	lastMark= null;
 	lastLoc= null;
 
+	function choose() {
+		choice= $("#selInput").val();
+		switch (choice) {
+			case "Basisschool":
+				$("#sureCheck").prop("checked", gebruiksdoel.match(/onderwijs/) != null); break;
+			case "Brandweerkazerne":
+				$("#sureCheck").prop("checked", gebruiksdoel.match(/kantoor/) != null); break;
+			case "Busstation":
+				// $("#sureCheck").prop("checked", false); break;
+				$("#sureCheck").prop("checked", gebruiksdoel.match(/industrie/) != null); break;
+			case "Middelbare school":
+				$("#sureCheck").prop("checked", gebruiksdoel.match(/onderwijs/) != null); break;
+			case "Politiebureau":
+				$("#sureCheck").prop("checked", gebruiksdoel.match(/kantoor/) != null); break;
+			case "Spoorwegovergang":
+				$("#sureCheck").prop("checked", gebruiksdoel.match(/GEEN/) != null); break;
+			case "Tankstation":
+				$("#sureCheck").prop("checked", gebruiksdoel.match(/industrie/) != null); break;
+			case "Treinstation":
+				$("#sureCheck").prop("checked", gebruiksdoel.match(/industrie/) != null); break;
+			case "Ziekenhuis":
+				$("#sureCheck").prop("checked", gebruiksdoel.match(/gezondheid/) != null); break;
+			case "Paaltje":
+				$("#sureCheck").prop("checked", gebruiksdoel.match(/GEEN/) != null); break;
+		}
+	}
+
 	function onMapClick(e) {
 		if (map.getZoom() < 11) {
 			$("#moreZoom").modal();
@@ -474,7 +517,8 @@ https://github.com/tomtor/school-crowd
 				"<tr><td>Link (bv foto):</td><td></tr><tr><td><input id=\"linkInput\" type=\"text\"/></td></tr>" +
 				"<tr><td>Maak een keuze:</td></tr>" +
 				"<tr>" +
-				"<td><select id=\"selInput\" style=\"width: 15em\" class=\"form-control\">" +
+				"<td><select id=\"selInput\" onchange=\"choose()\" style=\"width: 15em\" class=\"form-control\">" +
+				"<option value=\"geen\">???</option>"+ 
 				"<option value=\"Basisschool\">Basisschool</option>"+ 
 				"<option value=\"Brandweerkazerne\">Brandweerkazerne</option>"+ 
 				"<option value=\"Busstation\">Busstation</option>"+
@@ -485,20 +529,24 @@ https://github.com/tomtor/school-crowd
 				"<option value=\"Treinstation\">Treinstation</option>"+ 
 				"<option value=\"Ziekenhuis\">Ziekenhuis</option>"+
 				"<option value=\"Paaltje\">Paaltje</option>"+ 
-			"</select></td></tr></table><br/>" +
+			"</select></td></tr>" +
+			"<tr><td>Ik weet zeker dat hier dit object is</td><td><input id=\"sureCheck\" type=\"checkbox\"/></td></tr>" +
+			"</table><br/>" +
 			"<button id=\"addButton\" class=\"btn btn-success btn-sm btn-block\" type=\"button\">Toevoegen</button>";
 		if (lastMark)
 			map.removeLayer(lastMark);
 		lastMark = L.marker(e.latlng);
 		lastLoc = e.latlng;
+		getBAG(lastLoc.lng, lastLoc.lat);
 		lastMark.addTo(map).bindPopup(pu).openPopup();
 		$("#addButton").click(function(event) {
 			//if ($("#idInput").val() == "") {
 				//$("#noUser").modal();
 				//return;
 			//}
-			// unknown user, drop data:
-			if (idVoornaam.length == 0) {
+			// unknown user, or bad input: drop data!
+			if (idVoornaam.length == 0 || $("#selInput").val() == "geen"
+			|| $("#sureCheck").is(":checked") == false) {
 				map.closePopup();
 				return;
 			}
@@ -510,6 +558,8 @@ https://github.com/tomtor/school-crowd
 				},
 				"properties" : {
 					"kind" : $("#selInput").val(),
+					"gebruiksdoel": gebruiksdoel,
+					"identificatie": identificatie,
 					"objlink": $("#linkInput").val().length ? $("#linkInput").val() : null,
 					//"user" : $("#idInput").val(),
 					"user" : idVoornaam,
