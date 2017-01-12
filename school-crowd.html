@@ -233,7 +233,25 @@ https://github.com/tomtor/school-crowd
 			}});
 	}
 
+	function getTOP10() {
+		var latlng= RDM.projection.project(lastLoc);
+		var x= latlng.x;
+		var y= latlng.y;
+		top10= "GEEN";
+		$.ajax({
+			url: "https://geodata.nationaalgeoregister.nl/top10nlv2/wms?request=GetFeatureInfo&service=WMS&version=1.1.1&layers=top10nlv2&query_layers=top10nlv2&styles=&srs=EPSG:28992&x=0&y=0&width=1&height=1&info_format=application/json" +
+				"&bbox=" + x + "," + y + "," + (x+0.1) + "," + (y+0.1),
+			success: function(result) {
+				//alert(JSON.stringify(result));
+				try {
+					top10= result.features[0].id;
+				} catch(err) {
+				}
+			}});
+	}
+
 	function getBAG(x, y) {
+		getTOP10();
 		identificatie= "GEEN";
 		gebruiksdoel= "GEEN";
 		$.ajax({
@@ -504,7 +522,8 @@ https://github.com/tomtor/school-crowd
 			case "Ziekenhuis":
 				$("#sureCheck").prop("checked", gebruiksdoel.match(/gezondheid/) != null); break;
 			case "Paaltje":
-				$("#sureCheck").prop("checked", gebruiksdoel.match(/GEEN/) != null); break;
+				$("#sureCheck").prop("checked",
+					gebruiksdoel.match(/GEEN/) != null && top10.match(/wegdeel/) != null); break;
 		}
 	}
 
