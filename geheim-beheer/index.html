@@ -49,7 +49,6 @@ function refresh() {
 function fetchData() {
 	$.ajax({url: serverBase+"/dump" + secret, success: function(data){
 		var tbl_body = "";
-		var odd_even = false;
 		$.each(data, function() {
 			var del_but = "<td><button onclick=\"delObject('"+this[1]+"')\" type=\"button\">Verwijder</button></td>";
 			var tbl_row = del_but;
@@ -59,11 +58,8 @@ function fetchData() {
 			  js= JSON.parse(this[4]);
 			  js.properties.crypt= "???";
 			  jsn= "["+js.geometry.coordinates + "]," + js.properties.kind + "," + js.properties.user;
-				try {
-					jsn= jsn + "," + js.properties.gebruiksdoel;
-					jsn= jsn + "," + js.properties.top10;
-				}
-				catch(err) { }
+				jsn= jsn + "," + js.properties.gebruiksdoel;
+				jsn= jsn + "," + js.properties.top10;
 			  this[4]= jsn;
         this[1]= js.properties.eMail;
 			  //this[4]= JSON.stringify(js);
@@ -73,8 +69,7 @@ function fetchData() {
 				tbl_row += "<td>"+v+"</td>";
 			})
 			tbl_row += del_but;
-			tbl_body += "<tr class=\""+( odd_even ? "odd" : "even")+"\">"+tbl_row+"</tr>";
-			odd_even = !odd_even;               
+			tbl_body += "<tr>"+tbl_row+"</tr>";
 		})
 		$("#json2 tbody").html(tbl_body)
 	}});
