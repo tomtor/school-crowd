@@ -54,6 +54,10 @@ function fetchData() {
 			var tbl_row = del_but;
 			this[0]= this[0].substring(0,8);
 			this[1]= "";
+			try {
+			  js= JSON.parse(this[4]);
+				this[1]= js.eMail;
+			} catch (e) {}
 			$.each(this, function(k , v) {
 				tbl_row += "<td>"+v+"</td>";
 			})
