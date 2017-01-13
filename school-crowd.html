@@ -497,6 +497,20 @@ https://github.com/tomtor/school-crowd
 	lastMark= null;
 	lastLoc= null;
 
+	function setAddText()
+  {
+		if (idVoornaam.length == 0 || $("#selInput").val() == "geen"
+		|| $("#sureCheck").is(":checked") == false) {
+			$("#addButton").html("NIET toevoegen");
+			$("#addButton").addClass("btn-danger");
+			$("#addButton").removeClass("btn-success");
+		} else {
+			$("#addButton").html("Toevoegen");
+			$("#addButton").removeClass("btn-danger");
+			$("#addButton").addClass("btn-success");
+		}
+  }
+
 	function choose() {
 		choice= $("#selInput").val();
 		switch (choice) {
@@ -523,6 +537,7 @@ https://github.com/tomtor/school-crowd
 				$("#sureCheck").prop("checked",
 					gebruiksdoel.match(/GEEN/) != null && top10.match(/wegdeel/) != null); break;
 		}
+    setAddText();
 	}
 
 	function onMapClick(e) {
@@ -547,7 +562,7 @@ https://github.com/tomtor/school-crowd
 				"<option value=\"Ziekenhuis\">Ziekenhuis</option>"+
 				"<option value=\"Paaltje\">Paaltje</option>"+ 
 			"</select></td></tr>" +
-			"<tr><td>Ik weet zeker dat hier dit object is</td><td><input id=\"sureCheck\" type=\"checkbox\"/></td></tr>" +
+			"<tr><td>Ik weet zeker dat hier dit object is</td><td><input id=\"sureCheck\" onchange=\"setAddText()\" type=\"checkbox\"/></td></tr>" +
 			"</table><br/>" +
 			"<button id=\"addButton\" class=\"btn btn-success btn-sm btn-block\" type=\"button\">Toevoegen</button>";
 		if (lastMark)
@@ -556,6 +571,7 @@ https://github.com/tomtor/school-crowd
 		lastLoc = e.latlng;
 		getBAG(lastLoc.lng, lastLoc.lat);
 		lastMark.addTo(map).bindPopup(pu).openPopup();
+		setAddText();
 		$("#addButton").click(function(event) {
 			//if ($("#idInput").val() == "") {
 				//$("#noUser").modal();
