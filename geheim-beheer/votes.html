@@ -34,7 +34,8 @@ td {
 
 	<script>
 var serverBase = 'https://v7f.eu/pdok-demo-data';
-var server = serverBase + secret;
+var pubkey = '/8c959390-d650-11e6-82ac-0016cba2c19f';
+var server = serverBase + pubkey;
 function delObject(key) {
 	console.log(key);
 	$.ajax({url: server+"/delete/"+key});
