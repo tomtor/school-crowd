@@ -59,6 +59,11 @@ function fetchData() {
 			  js= JSON.parse(this[4]);
 			  js.properties.crypt= "???";
 			  jsn= "["+js.geometry.coordinates + "]," + js.properties.kind + "," + js.properties.user;
+				try {
+					jsn= jsn + "," + js.properties.gebruiksdoel;
+					jsn= jsn + "," + js.properties.top10;
+				}
+				catch(err) { }
 			  this[4]= jsn;
         this[1]= js.properties.eMail;
 			  //this[4]= JSON.stringify(js);

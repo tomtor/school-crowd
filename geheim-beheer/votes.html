@@ -55,15 +55,6 @@ function fetchData() {
 			var tbl_row = del_but;
 			this[0]= this[0].substring(0,8);
 			this[1]= "";
-			try {
-			  js= JSON.parse(this[4]);
-			  js.properties.crypt= "???";
-			  jsn= "["+js.geometry.coordinates + "]," + js.properties.kind + "," + js.properties.user;
-			  this[4]= jsn;
-        this[1]= js.properties.eMail;
-			  //this[4]= JSON.stringify(js);
-			}
-			catch(err) { }
 			$.each(this, function(k , v) {
 				tbl_row += "<td>"+v+"</td>";
 			})
