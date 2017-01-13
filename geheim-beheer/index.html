@@ -49,7 +49,7 @@ function refresh() {
 }
 
 function fetchData() {
-	$.ajax({url: serverBase+"/dump/school-crowd-geheim", success: function(data){
+	$.ajax({url: serverBase+"/dump" + secret, success: function(data){
 		var tbl_body = "";
 		var odd_even = false;
 		$.each(data, function() {
