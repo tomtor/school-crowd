@@ -502,11 +502,11 @@ https://github.com/tomtor/school-crowd
 		if (idVoornaam.length == 0 || $("#selInput").val() == "geen"
 		|| $("#sureCheck").is(":checked") == false) {
 			$("#addButton").html("NIET toevoegen");
-			$("#addButton").addClass("btn-danger");
+			$("#addButton").addClass("btn-warning");
 			$("#addButton").removeClass("btn-success");
 		} else {
 			$("#addButton").html("Toevoegen");
-			$("#addButton").removeClass("btn-danger");
+			$("#addButton").removeClass("btn-warning");
 			$("#addButton").addClass("btn-success");
 		}
   }
