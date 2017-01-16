@@ -224,6 +224,25 @@ https://github.com/tomtor/school-crowd
 	}
 
 	function toonGeo() {
+/*
+		$.ajax({url: "https://geodata.nationaalgeoregister.nl/locatieserver/suggest?q=" +
+			encodeURIComponent($("#idGeo").val()), success: function(result) {
+			 try {
+				var id= result.response.docs[0].id;
+				$.ajax({url: "https://geodata.nationaalgeoregister.nl/locatieserver/free?q=" + 
+					encodeURIComponent(id), success: function(result) {
+					//alert(JSON.stringify(result));
+					var ll= result.response.docs[0].geometrie_ll;
+					ll= ll.match(/.*\((.*) +(.*)\)/);
+					ll= L.latLng(parseFloat(ll[2]), parseFloat(ll[1]));
+					map.setView(ll, 13);
+				}});
+				$("#idGeo").val("");
+			} catch (err) {
+				alert("Niets gevonden!");
+			}
+			}});
+*/
 		$.ajax({url: "https://geodata.nationaalgeoregister.nl/geocoder/Geocoder?zoekterm=" +
 			encodeURIComponent($("#idGeo").val()), success: function(result) {
 				var pos= $(result).find("gml\\:pos, pos").first().text().split(" ");
