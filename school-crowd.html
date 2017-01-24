@@ -68,7 +68,7 @@ https://github.com/tomtor/school-crowd
 				<h4 class="modal-title">Let Op</h4>
 			</div>
 			<div class="modal-body">
-				<div class="alert alert-warning"><strong>Je moet verder inzoomen voordat je kan toevoegen!<strong></div>
+				<div class="alert alert-warning"><strong>Je moet verder inzoomen voordat je kan toevoegen!</strong></div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
@@ -86,7 +86,7 @@ https://github.com/tomtor/school-crowd
 				<h4 class="modal-title">Let Op</h4>
 			</div>
 			<div class="modal-body">
-				<div class="alert alert-warning"><strong>Vul een wachtwoord in!<strong></div>
+				<div class="alert alert-warning"><strong>Vul een wachtwoord in!</strong></div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
@@ -103,7 +103,7 @@ https://github.com/tomtor/school-crowd
 				<h4 class="modal-title">Let Op</h4>
 			</div>
 			<div class="modal-body">
-				<div class="alert alert-warning"><strong>Verkeerd wachtwoord ingevuld!<strong></div>
+				<div class="alert alert-warning"><strong>Verkeerd wachtwoord ingevuld!</strong></div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
@@ -213,7 +213,7 @@ https://github.com/tomtor/school-crowd
 
 	// method that we will use to update the control based on feature properties passed
 	info.update = function (props) {
-		info =
+		var htmlInfo =
 			'<b><small>Klik voegt toe:</small></b><br/><br/>'
 			+ "<small>"
 			+ "<img src='images/basisschool-icon.png' width='24'>&nbsp;Basisschool<br/>"
@@ -227,7 +227,7 @@ https://github.com/tomtor/school-crowd
 			+ "<img src='images/ziekenhuis-icon.png' width='24'>&nbsp;Ziekenhuis<br/>"
 			+ "<img src='images/Road-Cone-icon.png' width='24'>&nbsp;Paaltje<br/>"
 			+ "</small>";
-		this._div.innerHTML = info;
+		this._div.innerHTML = htmlInfo;
 	};
 	info.addTo(map);
 
@@ -237,6 +237,8 @@ https://github.com/tomtor/school-crowd
 		//document.cookie= "idSession = ;";
 		setCookie("idDone", "true");
 		$("#idFinished").html("");
+		info.remove();
+		//info._div.innerHTML = "";
 		$.ajax({url: server+"/get/", success: function(result){ markersReceived(result) }});
 		map.setZoom(map.getZoom()-4);
 		//window.location.href = 'school-crowd.html';
