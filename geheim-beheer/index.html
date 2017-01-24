@@ -22,7 +22,10 @@ tr td {
 		<thead>
       <th>Actie</th>
       <th>ID</th>
+<!--
       <th>e-Mail</th>
+-->
+      <th>Session</th>
       <th>IP-address</th>
       <th>Date/Time</th>
       <th>Data</th>
@@ -61,7 +64,8 @@ function fetchData() {
 				jsn= jsn + "," + js.properties.gebruiksdoel;
 				jsn= jsn + "," + js.properties.top10;
 			  this[4]= jsn;
-        this[1]= js.properties.eMail;
+        //this[1]= js.properties.eMail;
+        this[1]= js.properties.session;
 			  //this[4]= JSON.stringify(js);
 			}
 			catch(err) { }
