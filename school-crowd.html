@@ -49,6 +49,12 @@ https://github.com/tomtor/school-crowd
 			<tr>
 				<td style="text-align: center;"><h2 style="padding: 2px;">School Crowd</h2><p>Zet de belangrijke objecten op de kaart</p></td><td class="logo"><a href="https://www.kadaster.nl"><img src="logo.png"/></a></td>
 			</tr>
+			<tr>
+				<td>
+					<div id="idFinished" class="col-sm-4"></div>
+					<div id="idNrActions" class="col-sm-4"></div>
+				</td>
+			</tr>
 		</table>
 	</div>
 <div id="map" style="margin-top: -12px; margin-right: -2px;"></div>
@@ -71,6 +77,7 @@ https://github.com/tomtor/school-crowd
 	</div>
 </div>
 
+<!--
 <div id="noPW" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -104,6 +111,7 @@ https://github.com/tomtor/school-crowd
 		</div>
 	</div>
 </div>
+-->
 
 <div id="searchModal" class="modal fade" role="dialog">
 	<div class="modal-dialog">
@@ -222,7 +230,8 @@ https://github.com/tomtor/school-crowd
 	$('#searchModal').on('shown.bs.modal', function () { $('#idGeo').focus(); })
 
 	function finished() {
-		document.cookie= "idSession = ;";
+		//document.cookie= "idSession = ;";
+		setCookie("idDone", "true");
 		window.location.href = 'school-crowd.html';
 	}
 
@@ -343,8 +352,10 @@ https://github.com/tomtor/school-crowd
 			paaltjeIcon = new CrowdIcon({iconUrl: 'images/Road-Cone-icon.png'});
 
 	filter= "";
-	if (getCookie("idSession").length > 0)
-		filter= '%"eMail":"' + getCookie("idMail") + '"%';
+	//if (getCookie("idSession").length > 0)
+	if (getCookie("idDone").length == 0)
+		//filter= '%"eMail":"' + getCookie("idMail") + '"%';
+		filter= '%"session":"' + getCookie("idSession") + '"%';
 	$.ajax({url: server+"/get/" + filter,
 		success: function(result){ markersReceived(result) }});
 
@@ -362,6 +373,14 @@ https://github.com/tomtor/school-crowd
 		}
 		return "";
 	}
+
+	function setCookie(name,value) {
+		expireDate = new Date;
+		expireDate.setMonth(expireDate.getMonth()+1)
+			document.cookie= name + "=" + encodeURIComponent(value) + ";" +
+			"expires=" + expireDate.toGMTString();
+	}
+
 
 	function getDPI() {
 		return document.getElementById("dpi").offsetHeight;
@@ -412,6 +431,7 @@ https://github.com/tomtor/school-crowd
 
 	markers = {};
 
+/*
 	function delSecret(crypt) {
 		//var pw= $("#pwInput").val();
 		var pw= idPassword;
@@ -428,6 +448,7 @@ https://github.com/tomtor/school-crowd
 		} else
 				$("#noPW").modal();
 	}
+*/
 
 	function createIcon(latlng, kind) {
 		var geojsonMarkerOptions = {
@@ -462,15 +483,40 @@ https://github.com/tomtor/school-crowd
 		return L.circleMarker(latlng, geojsonMarkerOptions);
 	}
 
+	function showActions() {
+		$("#idNrActions").html(
+			"<p>" + toInt("idNrAdded") + "&nbsp;+&nbsp;&nbsp;" +
+			toInt("idVotesUp") + "&nbsp;<img src=\"images/thumbs_up.png\"/>&nbsp;&nbsp;" +
+			toInt("idVotesDown") + "&nbsp;<img src=\"images/thumbs_down.png\"/>" + "</p>"
+		);
+	}
+
+  function toInt(cookie) {
+    var ck= getCookie(cookie);
+		if (ck.length > 0)
+			return parseInt(ck);
+    else
+			return 0;
+	}
+
   function addVote(index, val) {
+		if (val > 0) {
+			var votesUp= toInt("idVotesUp");
+			setCookie("idVotesUp", (votesUp+1).toString());
+		} else {
+			var votesDown= toInt("idVotesDown");
+			setCookie("idVotesDown", (votesDown+1).toString());
+		}
+		showActions();
+
 		var vote= {
 					"object": plotlist[index].properties.uuid,
 					"vote": val,
-					"user" : idVoornaam,
-					"location" : idLocation,
-					"eMail" : idMail,
+					//"user" : idVoornaam,
+					//"location" : idLocation,
+					//"eMail" : idMail,
 					"leeftijd" : idLeeftijd,
-					"school" : idSchool,
+					//"school" : idSchool,
 					"session" : getCookie("idSession")
 		};
 		var msg= serverVote + '/add/' + encodeURIComponent(JSON.stringify(vote));
@@ -484,17 +530,19 @@ https://github.com/tomtor/school-crowd
 			try {
 				pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\">" +
 					// "<tr><td>Gebruiker:</td><td>" + xss(plotlist[i].properties.user) + " / "+ xss(plotlist[i].properties.uuid).substring(0,8) + "</td></tr>" +
-					"<tr><td>Object:</td><td>" + xss(plotlist[i].properties.uuid).substring(0,8) + "</td></tr>" +
-					(plotlist[i].properties.objlink ?
-						("<tr><td>Link:</td><td><b><a href=\"" + decode(plotlist[i].properties.objlink) + "\" target=\"_blank\">toon</a></b></td></tr>") : "") +
+					// "<tr><td>Object:</td><td>" + xss(plotlist[i].properties.uuid).substring(0,8) + "</td></tr>" +
+					// (plotlist[i].properties.objlink ?
+						// ("<tr><td>Link:</td><td><b><a href=\"" + decode(plotlist[i].properties.objlink) + "\" target=\"_blank\">toon</a></b></td></tr>") : "") +
 					"<tr><td>Soort:</td><td><b>" + xss(plotlist[i].properties.kind) + "</td></tr>" +
 					"<tr><td><button onclick=\"addVote("+i+",1);\" type=\"button\"><img src=\"images/thumbs_up.png\"/></button></td>" +
 					"<td><button onclick=\"addVote("+i+",-1);\" type=\"button\"><img src=\"images/thumbs_down.png\"/></button></td>" +
 					"</tr></table>";
+/*
 				if (plotlist[i].properties.crypt) {
 					pu= pu + "<button id=\"delCryptButton\" class=\"btn btn-danger btn-sm btn-block\" onclick=\"delSecret('"
 						+xss(plotlist[i].properties.crypt)+"');\" type=\"button\">Verwijder</button>";
 				}
+*/
 				var lm= L.geoJson(plotlist[i], {
 					pointToLayer: function (feature, latlng) {
 						return createIcon(latlng, plotlist[i].properties.kind);
@@ -567,6 +615,9 @@ https://github.com/tomtor/school-crowd
 	}
 
 	function onMapClick(e) {
+		if (getCookie("idDone").length > 0) {
+			return;
+		}
 		if (map.getZoom() < 11) {
 			$("#moreZoom").modal();
 			return;
@@ -599,16 +650,17 @@ https://github.com/tomtor/school-crowd
 		lastMark.addTo(map).bindPopup(pu).openPopup();
 		setAddText();
 		$("#addButton").click(function(event) {
-			//if ($("#idInput").val() == "") {
-				//$("#noUser").modal();
-				//return;
-			//}
 			// unknown user, or bad input: drop data!
 			if (idVoornaam.length == 0 || $("#selInput").val() == "geen"
 			|| $("#sureCheck").is(":checked") == false) {
 				map.closePopup();
 				return;
 			}
+
+			var nrAdded= toInt(getCookie("idnrAdded"));
+			setCookie("idNrAdded", (NrAdded+1).toString());
+			showActions();
+
 			var gjf = {
 				"type": "Feature",
 				"geometry": {
@@ -620,13 +672,12 @@ https://github.com/tomtor/school-crowd
 					"gebruiksdoel": gebruiksdoel,
 					"identificatie": identificatie,
 					"top10": top10,
-					"objlink": $("#linkInput").val().length ? $("#linkInput").val() : null,
-					//"user" : $("#idInput").val(),
-					"user" : idVoornaam,
-					"location" : idLocation,
-					"eMail" : idMail,
+					// "objlink": $("#linkInput").val().length ? $("#linkInput").val() : null,
+					// "user" : idVoornaam,
+					// "location" : idLocation,
+					// "eMail" : idMail,
 					"leeftijd" : idLeeftijd,
-					"school" : idSchool,
+					// "school" : idSchool,
 					"session" : getCookie("idSession")
 				}
 			};
@@ -647,13 +698,13 @@ https://github.com/tomtor/school-crowd
 				lastMark.bindPopup(pu);
 				lastMark= null;
 		
-				//if ($("#pwInput").val().length > 0) {
+/*
 				if (idPassword.length > 0) {
-					//gjf.properties.crypt= a2hex(CryptoJS.AES.encrypt(result, $("#pwInput").val())+"");
 					gjf.properties.crypt= a2hex(CryptoJS.AES.encrypt(result, idPassword)+"");
 					var msg= server + '/update/' + result +'/' + encodeURIComponent(JSON.stringify(gjf));
 					$.ajax({url: msg, success: function(result){} });
 				}
+*/
 			}});
 		});
 	}
@@ -661,39 +712,26 @@ https://github.com/tomtor/school-crowd
 	map.on('click', onMapClick);
 
 	function getCookies() {
-		idVoornaam= getCookie("idVoornaam");
-		idLocation= getCookie("idLocation");
+		//idVoornaam= getCookie("idVoornaam");
+		//idLocation= getCookie("idLocation");
 		idLeeftijd= getCookie("idLeeftijd");
-		idSchool= getCookie("idSchool");
-		idMail= getCookie("idMail");
-		idPassword= getCookie("idPassword");
+		//idSchool= getCookie("idSchool");
+		//idMail= getCookie("idMail");
+		//idPassword= getCookie("idPassword");
 
-		//if (idVoornaam.length > 0) {
-			//$("#idInput").val(idVoornaam);
-		//}
-		//if (idPassword.length > 0) {
-			//$("#pwInput").val(idPassword);
-		//}
-
-		if (getCookie("idSession").length > 0) {
+		//if (getCookie("idSession").length > 0) {
+		if (getCookie("idDone").length == 0) {
 			$("#idFinished").html(
 				"<p><a class='btn btn-primary btn-xl' style='color:white;' onclick='finished()'>Ik ben KLAAR!</a></p>");
 		}
+		showActions();
   }
 
 </script>
 <p></p>
-<div class="row">
-	<div id="idFinished" class="col-sm-4"> </div>
-</div>
 <!--
 <div class="row">
-	<div class="col-sm-4">
-		<label for="inputEmail" class="sr-only">Gebruiker</label>
-		<input type="email" id="idInput" class="form-control" placeholder="Je e-Mail of Naam" required autofocus>
-		<label for="inputPassword" class="sr-only">Wachtwoord</label>
-		<input type="password" id="pwInput" class="form-control" placeholder="Wachtwoord (mag leeg blijven)">
-	</div>
+	<div id="idFinished" class="col-sm-4"> </div>
 </div>
 -->
 </div>

@@ -166,11 +166,12 @@ function clrCookies() {
 	//setCookie("idMail", "");
 	//setCookie("idPassword", "");
 
-	$("#idLocation").val("");
+	//$("#idLocation").val("");
 	copyCookies();
 }
 
 function copyCookies() {
+	setCookie("idDone", "");
 	//$("#idVoornaam").val(getCookie("idVoornaam"));
 	////$("#idLocation").val(getCookie("idLocation"));
 	$("#idLeeftijd").val(getCookie("idLeeftijd"));
