@@ -560,6 +560,9 @@ https://github.com/tomtor/school-crowd
 	}
 
 	function delObject(key) {
+		var nrAdded= toInt("idNrAdded");
+		setCookie("idNrAdded", (nrAdded-1).toString());
+		showActions();
 		$.ajax({url: server+"/delete/"+key});
 		map.closePopup();
 		var marker= markers[key];
@@ -573,7 +576,8 @@ https://github.com/tomtor/school-crowd
 
 	function setAddText()
   {
-		if (idVoornaam.length == 0 || $("#selInput").val() == "geen"
+		//if (idVoornaam.length == 0 || $("#selInput").val() == "geen"
+		if ($("#selInput").val() == "geen"
 		|| $("#sureCheck").is(":checked") == false) {
 			$("#addButton").html("NIET toevoegen");
 			$("#addButton").addClass("btn-warning");
@@ -650,15 +654,15 @@ https://github.com/tomtor/school-crowd
 		lastMark.addTo(map).bindPopup(pu).openPopup();
 		setAddText();
 		$("#addButton").click(function(event) {
-			// unknown user, or bad input: drop data!
-			if (idVoornaam.length == 0 || $("#selInput").val() == "geen"
+			//if (idVoornaam.length == 0 || $("#selInput").val() == "geen"
+			if ($("#selInput").val() == "geen"
 			|| $("#sureCheck").is(":checked") == false) {
 				map.closePopup();
 				return;
 			}
 
-			var nrAdded= toInt(getCookie("idnrAdded"));
-			setCookie("idNrAdded", (NrAdded+1).toString());
+			var nrAdded= toInt("idNrAdded");
+			setCookie("idNrAdded", (nrAdded+1).toString());
 			showActions();
 
 			var gjf = {
