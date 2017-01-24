@@ -232,7 +232,10 @@ https://github.com/tomtor/school-crowd
 	function finished() {
 		//document.cookie= "idSession = ;";
 		setCookie("idDone", "true");
-		window.location.href = 'school-crowd.html';
+		$("#idFinished").html("");
+		$.ajax({url: server+"/get/", success: function(result){ markersReceived(result) }});
+		map.setZoom(map.getZoom()-4);
+		//window.location.href = 'school-crowd.html';
 	}
 
 	function searchGeo() {
