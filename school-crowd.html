@@ -176,12 +176,16 @@ https://github.com/tomtor/school-crowd
 	});
 	
 	var map = L.map('map', {doubleClickZoom:false, crs:RDM,
-		layers:[luchtfoto, achtergrondkaart]}).setView([52.15, 5.2], 3);
+		//layers:[luchtfoto, achtergrondkaart]}).setView([52.15, 5.2], 3);
+		layers:[achtergrondkaart]}).setView([52.15, 5.2], 3);
 	var baseMaps = {
-		"Luchtfoto": luchtfoto,
-		"Kaart": achtergrondkaart
+		"Kaart": achtergrondkaart,
+		"Luchtfoto": luchtfoto
 	};
-	L.control.layers(baseMaps, null, {position: 'topleft'}).addTo(map);
+	var overMaps = {
+	};
+	layerControl= L.control.layers(baseMaps, null, {position: 'topleft'});
+	layerControl.addTo(map);
 
 	var searchControl = L.Control.extend({
 		options: {
