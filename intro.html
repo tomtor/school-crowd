@@ -38,6 +38,7 @@ https://github.com/tomtor/school-crowd
 <body onload="copyCookies()">
 <div class="container">
 
+<!--
 	<div id="noLokatie" class="modal fade" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -105,6 +106,7 @@ https://github.com/tomtor/school-crowd
 			</div>
 		</div>
 	</div>
+-->
 
 
 	<div id="noLeeftijd" class="modal fade" role="dialog">
@@ -157,27 +159,28 @@ function setCookie(name,value) {
 }
 
 function clrCookies() {
-	setCookie("idVoornaam", "");
-	setCookie("idLocation", "");
+	//setCookie("idVoornaam", "");
+	//setCookie("idLocation", "");
 	setCookie("idLeeftijd", "");
-	setCookie("idSchool", "");
-	setCookie("idMail", "");
-	setCookie("idPassword", "");
+	//setCookie("idSchool", "");
+	//setCookie("idMail", "");
+	//setCookie("idPassword", "");
 
 	$("#idLocation").val("");
 	copyCookies();
 }
 
 function copyCookies() {
-	$("#idVoornaam").val(getCookie("idVoornaam"));
-	//$("#idLocation").val(getCookie("idLocation"));
+	//$("#idVoornaam").val(getCookie("idVoornaam"));
+	////$("#idLocation").val(getCookie("idLocation"));
 	$("#idLeeftijd").val(getCookie("idLeeftijd"));
-	$("#idSchool").val(getCookie("idSchool"));
-	$("#idMail").val(getCookie("idMail"));
-	$("#idPassword").val(getCookie("idPassword"));
+	//$("#idSchool").val(getCookie("idSchool"));
+	//$("#idMail").val(getCookie("idMail"));
+	//$("#idPassword").val(getCookie("idPassword"));
 }
 
 function setCookies() {
+/*
 	if ($("#idLocation").val().length == 0) {
 		$("#noLokatie").modal();
 		return;
@@ -190,10 +193,12 @@ function setCookies() {
 		$("#noVoornaam").modal();
 		return;
 	}
+*/
 	if ($("#idLeeftijd").val().length == 0) {
 		$("#noLeeftijd").modal();
 		return;
 	}
+/*
 	if ($("#idSchool").val().length == 0) {
 		$("#noSchool").modal();
 		return;
@@ -201,11 +206,14 @@ function setCookies() {
 
 	setCookie("idVoornaam", $("#idVoornaam").val());
 	setCookie("idLocation", $("#idLocation").val());
+*/
 	setCookie("idLeeftijd", $("#idLeeftijd").val());
+/*
 	setCookie("idSchool", $("#idSchool").val());
 	setCookie("idMail", $("#idMail").val());
 	setCookie("idPassword", $("#idPassword").val());
 	setCookie("idSession", Math.random().toString());
+*/
 	window.location.href = 'school-crowd.html';
 }
 
@@ -214,6 +222,7 @@ var server = serverBase + '/0ff8d17a-dc80-11e5-b7b0-b827eb842aa1';
 
 function fill()
 {
+/*
 	filter= '%"eMail":"' + $("#idMail").val() + '"%';
 	$.ajax({url: server+"/get/" + filter,
 		success: function(result){ 
@@ -223,12 +232,14 @@ function fill()
 				$("#idSchool").val(result[0].properties.school);
 			}
 		}});
+*/
 }
 </script>
 
 <p></p>
 <div class="row">
 	<div class="col-sm-4" style="color:white;">
+<!--
 		<input type="text" id="idLocation" class="form-control" placeholder="Ben je op school / thuis / ergens anders?" required autofocus>
 		<p></p>
 
@@ -239,11 +250,13 @@ function fill()
 		<label class="sr-only">Voornaam</label>
 		<input type="text" id="idVoornaam" class="form-control" placeholder="Je voornaam" required autofocus>
 		<p></p>
+-->
 
 		<label class="sr-only">Leeftijd</label>
 		<input type="number" id="idLeeftijd" class="form-control" placeholder="Je leeftijd">
 		<p></p>
 
+<!--
 		<label class="sr-only">School</label>
 		<input type="text" id="idSchool" class="form-control" placeholder="Je school">
 		<p></p>
@@ -251,9 +264,12 @@ function fill()
 		<label for="inputPassword" class="sr-only">Wachtwoord</label>
 		<input type="password" id="idPassword" class="form-control" placeholder="Wachtwoord (mag leeg blijven)">
 		<p></p>
+-->
 
 		<a class="btn btn-primary btn-xl" onclick="setCookies()">START de App!</a>
+<!--
 		<a class="btn btn-primary btn-xl" onclick="clrCookies()">Wis alle velden</a>
+-->
 	</div>
 </div>
 </div>
