@@ -180,6 +180,13 @@ function copyCookies() {
 	//$("#idPassword").val(getCookie("idPassword"));
 }
 
+function ran8() {
+	return 'xxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+    return v.toString(16);
+	});
+}
+
 function setCookies() {
 /*
 	if ($("#idLocation").val().length == 0) {
@@ -214,7 +221,8 @@ function setCookies() {
 	setCookie("idMail", $("#idMail").val());
 	setCookie("idPassword", $("#idPassword").val());
 */
-	setCookie("idSession", Math.random().toString());
+	//setCookie("idSession", Math.random().toString());
+	setCookie("idSession", ran8());
 	window.location.href = 'school-crowd.html';
 }
 
