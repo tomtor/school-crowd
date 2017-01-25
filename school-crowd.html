@@ -251,7 +251,7 @@ https://github.com/tomtor/school-crowd
 		}
 		//document.cookie= "idSession = ;";
 		setCookie("idDone", "true");
-		$("#idFinished").html("");
+		//$("#idFinished").html("");
 		//info.remove();
 		//info._div.innerHTML = "";
 		showActions();
@@ -515,8 +515,8 @@ https://github.com/tomtor/school-crowd
 			);
 		} else {
 			$("#idNrActions").html(
-				"<p>Je hebt " + (toInt("idVotesUp") + toInt("idVotesDown")) + " objecten gecontroleerd: " +
-				toInt("idVotesUp") + "&nbsp;<img src=\"images/thumbs_up.png\"/>&nbsp;&nbsp;" +
+				"<p>Je hebt " + (toInt("idVotesUp") + toInt("idVotesDown")) + " objecten gecontroleerd:</p>" +
+				"<p>" + toInt("idVotesUp") + "&nbsp;<img src=\"images/thumbs_up.png\"/>&nbsp;&nbsp;" +
 				toInt("idVotesDown") + "&nbsp;<img src=\"images/thumbs_down.png\"/>" + "</p>"
 			);
 		}
