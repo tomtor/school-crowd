@@ -222,7 +222,8 @@ function setCookies() {
 	setCookie("idPassword", $("#idPassword").val());
 */
 	//setCookie("idSession", Math.random().toString());
-	setCookie("idSession", ran8());
+	if (getCookie("idSession").length == 0)
+		setCookie("idSession", ran8());
 	setCookie("idDone", "");
 	window.location.href = 'school-crowd.html';
 }
