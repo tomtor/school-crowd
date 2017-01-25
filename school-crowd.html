@@ -229,7 +229,8 @@ https://github.com/tomtor/school-crowd
 			+ "</small>";
 		this._div.innerHTML = htmlInfo;
 	};
-	info.addTo(map);
+	if (getCookie("idSession").length > 0)
+		info.addTo(map);
 
 	$('#searchModal').on('shown.bs.modal', function () { $('#idGeo').focus(); })
 
@@ -628,7 +629,8 @@ https://github.com/tomtor/school-crowd
 	}
 
 	function onMapClick(e) {
-		if (getCookie("idDone").length > 0) {
+		if (getCookie("idDone").length > 0
+		|| getCookie("idSession").length == 0) {
 			return;
 		}
 		if (map.getZoom() < 11) {
