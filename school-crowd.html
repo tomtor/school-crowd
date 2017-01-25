@@ -443,6 +443,7 @@ https://github.com/tomtor/school-crowd
 	}
 
 	markers = {};
+	votes = {};
 
 /*
 	function delSecret(crypt) {
@@ -522,6 +523,9 @@ https://github.com/tomtor/school-crowd
 		}
 		showActions();
 
+		setCookie("idVoted", getCookie("idVoted") + ":" + plotlist[index].properties.uuid.substring(0,8));
+		votes[index].bindPopup("<p>Je hebt hier al op gestemd!</p>");
+
 		var vote= {
 					"object": plotlist[index].properties.uuid,
 					"vote": val,
@@ -541,7 +545,9 @@ https://github.com/tomtor/school-crowd
 		plotlist= result;
 		for (i= 0; i < plotlist.length; i++) {
 			try {
-				if (plotlist[i].properties.session != getCookie("idSession")) {
+				if (getCookie("idVoted").search(plotlist[i].properties.uuid.substring(0,8)) >= 0) {
+					pu= "<p>Je hebt hier al op gestemd!</p>";
+				} else if (plotlist[i].properties.session != getCookie("idSession")) {
 					pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\">" +
 						// "<tr><td>Gebruiker:</td><td>" + xss(plotlist[i].properties.user) + " / "+ xss(plotlist[i].properties.uuid).substring(0,8) + "</td></tr>" +
 						// "<tr><td>Object:</td><td>" + xss(plotlist[i].properties.uuid).substring(0,8) + "</td></tr>" +
@@ -565,7 +571,7 @@ https://github.com/tomtor/school-crowd
 						return createIcon(latlng, plotlist[i].properties.kind);
 					}
 				});
-				lm.addTo(map).bindPopup(pu);
+				votes[i]= lm.addTo(map).bindPopup(pu);
 /*
 				if (plotlist[i].properties.crypt) {
 					markers[plotlist[i].properties.crypt]= lm;
