@@ -171,7 +171,7 @@ function clrCookies() {
 }
 
 function copyCookies() {
-	setCookie("idDone", "");
+	//setCookie("idDone", "");
 	//$("#idVoornaam").val(getCookie("idVoornaam"));
 	////$("#idLocation").val(getCookie("idLocation"));
 	$("#idLeeftijd").val(getCookie("idLeeftijd"));
@@ -223,6 +223,7 @@ function setCookies() {
 */
 	//setCookie("idSession", Math.random().toString());
 	setCookie("idSession", ran8());
+	setCookie("idDone", "");
 	window.location.href = 'school-crowd.html';
 }
 
