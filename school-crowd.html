@@ -511,11 +511,11 @@ https://github.com/tomtor/school-crowd
 	function showActions() {
 		if (getCookie("idDone").length == 0) {
 			$("#idNrActions").html(
-				"<p>Je hebt " + toInt("idNrAdded") + " objecten toegevoegd!</p>"
+				"<p>Je hebt " + toInt("idNrAdded") + " object(en) toegevoegd!</p>"
 			);
 		} else {
 			$("#idNrActions").html(
-				"<p>Je hebt " + (toInt("idVotesUp") + toInt("idVotesDown")) + " objecten gecontroleerd:</p>" +
+				"<p>Je hebt " + (toInt("idVotesUp") + toInt("idVotesDown")) + " object(en) gecontroleerd:</p>" +
 				"<p>" + toInt("idVotesUp") + "&nbsp;<img src=\"images/thumbs_up.png\"/>&nbsp;&nbsp;" +
 				toInt("idVotesDown") + "&nbsp;<img src=\"images/thumbs_down.png\"/>" + "</p>"
 			);
