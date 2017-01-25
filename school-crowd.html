@@ -541,17 +541,19 @@ https://github.com/tomtor/school-crowd
 		plotlist= result;
 		for (i= 0; i < plotlist.length; i++) {
 			try {
-				pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\">" +
-					// "<tr><td>Gebruiker:</td><td>" + xss(plotlist[i].properties.user) + " / "+ xss(plotlist[i].properties.uuid).substring(0,8) + "</td></tr>" +
-					// "<tr><td>Object:</td><td>" + xss(plotlist[i].properties.uuid).substring(0,8) + "</td></tr>" +
-					// (plotlist[i].properties.objlink ?
-						// ("<tr><td>Link:</td><td><b><a href=\"" + decode(plotlist[i].properties.objlink) + "\" target=\"_blank\">toon</a></b></td></tr>") : "") +
-					"<tr><td>Soort:</td><td><b>" + xss(plotlist[i].properties.kind) + "</td></tr>";
 				if (plotlist[i].properties.session != getCookie("idSession")) {
+					pu = "<table style=\"border-collapse: separate; border-spacing: 5px;\">" +
+						// "<tr><td>Gebruiker:</td><td>" + xss(plotlist[i].properties.user) + " / "+ xss(plotlist[i].properties.uuid).substring(0,8) + "</td></tr>" +
+						// "<tr><td>Object:</td><td>" + xss(plotlist[i].properties.uuid).substring(0,8) + "</td></tr>" +
+						// (plotlist[i].properties.objlink ?
+							// ("<tr><td>Link:</td><td><b><a href=\"" + decode(plotlist[i].properties.objlink) + "\" target=\"_blank\">toon</a></b></td></tr>") : "") +
+						"<tr><td>Soort:</td><td><b>" + xss(plotlist[i].properties.kind) + "</td></tr>";
 					pu= pu + "<tr><td><button onclick=\"addVote("+i+",1);\" type=\"button\"><img src=\"images/thumbs_up.png\"/></button></td>" +
-						"<td><button onclick=\"addVote("+i+",-1);\" type=\"button\"><img src=\"images/thumbs_down.png\"/></button></td>";
+						"<td><button onclick=\"addVote("+i+",-1);\" type=\"button\"><img src=\"images/thumbs_down.png\"/></button></td></tr>";
+					pu = pu + "</table>";
+				} else {
+					pu= "<p>Dit object is door jou gemaakt!</p>";
 				}
-				pu = pu + "</tr></table>";
 /*
 				if (plotlist[i].properties.crypt) {
 					pu= pu + "<button id=\"delCryptButton\" class=\"btn btn-danger btn-sm btn-block\" onclick=\"delSecret('"
