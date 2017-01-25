@@ -141,6 +141,9 @@ https://github.com/tomtor/school-crowd
 <script src="proj4leaflet.js?1"></script>
 <script src="aes.js"></script>
 <script>
+	if (getCookie("idSession").length == 0)
+		window.location.href = 'intro.html';
+
 	var serverBase = '/pdok-demo-data';
 	var server = serverBase + '/0ff8d17a-dc80-11e5-b7b0-b827eb842aa1';
 	var serverVote = serverBase + '/8c959390-d650-11e6-82ac-0016cba2c19f';
@@ -229,8 +232,8 @@ https://github.com/tomtor/school-crowd
 			+ "</small>";
 		this._div.innerHTML = htmlInfo;
 	};
-	if (getCookie("idSession").length > 0)
-		info.addTo(map);
+	//if (getCookie("idSession").length > 0)
+	info.addTo(map);
 
 	$('#searchModal').on('shown.bs.modal', function () { $('#idGeo').focus(); })
 
