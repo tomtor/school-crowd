@@ -535,9 +535,6 @@ https://github.com/tomtor/school-crowd
 		}
 		showActions();
 
-		setCookie("idVoted", getCookie("idVoted") + ":" + plotlist[index].properties.uuid.substring(0,8));
-		votes[index].bindPopup("<p>Je hebt hier al op gestemd!</p>");
-
 		var vote= {
 					"object": plotlist[index].properties.uuid,
 					"vote": val,
@@ -551,6 +548,9 @@ https://github.com/tomtor/school-crowd
 		var msg= serverVote + '/add/' + encodeURIComponent(JSON.stringify(vote));
 		$.ajax({url: msg, success: function(result){ }});
 		map.closePopup();
+
+		setCookie("idVoted", getCookie("idVoted") + ":" + plotlist[index].properties.uuid.substring(0,8));
+		votes[index].bindPopup("<p>Je hebt hier al op gestemd!</p>");
 	}
 
 	function markersReceived(result) {
