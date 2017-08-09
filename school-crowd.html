@@ -172,7 +172,8 @@ https://github.com/tomtor/school-crowd
 		attribution: '<a href="https://github.com/tomtor/PDOK-demo-app">DemoMap</a> Map data &copy; <a href="http://pdok.nl">PDOK</a>',
 		id: 'brtachtergrondkaart'
 	});
-	var luchtfoto = L.tileLayer('https://geodata1.nationaalgeoregister.nl/luchtfoto/tms/1.0.0/luchtfoto_png/EPSG28992/{z}/{x}/{y}.png', {
+	//var luchtfoto = L.tileLayer('https://geodata1.nationaalgeoregister.nl/luchtfoto/tms/1.0.0/luchtfoto_png/EPSG28992/{z}/{x}/{y}.png', {
+	var luchtfoto = L.tileLayer('https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/tms/1.0.0/Actueel_ortho25/EPSG%3A28992/{z}/{x}/{y}.jpeg', {
 		tms: true,
 		minZoom: 2,
 		maxZoom: 13,
